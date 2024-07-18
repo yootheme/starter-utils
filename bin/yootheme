@@ -1,0 +1,26 @@
+#!/usr/bin/env php
+<?php
+
+use Symfony\Component\Console\Application;
+
+if (PHP_SAPI !== 'cli') {
+    exit('CLI only');
+}
+
+foreach ([__DIR__ . '/../../../autoload.php', __DIR__ . '/../vendor/autoload.php'] as $file) {
+    if (file_exists($file)) {
+        require $file;
+        break;
+    }
+}
+
+ini_set('memory_limit', '512M');
+
+$app = new Application();
+
+foreach (glob(__DIR__ . '/../src/Console/*Command.php') as $file) {
+    $cmd = 'YOOtheme\\Starter\\Console\\' . basename($file, '.php');
+    $app->add(new $cmd());
+}
+
+$app->run();
