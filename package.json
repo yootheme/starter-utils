@@ -1,0 +1,13 @@
+{
+    "type": "module",
+    "private": true,
+    "scripts": {
+        "prettier:check": "prettier . --check",
+        "prettier:write": "prettier . --write"
+    },
+    "devDependencies": {
+        "@prettier/plugin-php": "^0.22.2",
+        "@prettier/plugin-xml": "^3.4.1",
+        "prettier": "^3.3.3"
+    }
+}
