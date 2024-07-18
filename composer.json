@@ -1,0 +1,24 @@
+{
+    "name": "yootheme/starter-utils",
+    "description": "YOOtheme Pro - Starter Utilities",
+    "license": "MIT",
+    "homepage": "https://yootheme.com",
+    "support": {
+        "issues": "https://github.com/yootheme/starter-utils/issues",
+        "source": "https://github.com/yootheme/starter-utils"
+    },
+    "autoload": {
+        "psr-4": {
+            "YOOtheme\\Starter\\": "src"
+        }
+    },
+    "require-dev": {
+        "symfony/console": "^5.4|^6.0|^7.0"
+    },
+    "scripts": {
+        "yootheme": "php ./bin/yootheme"
+    },
+    "bin": [
+        "bin/yootheme"
+    ]
+}
