@@ -39,7 +39,7 @@ class ElementCreateCommand extends Command
             'TITLE' => $title,
         ];
 
-        Fs::copyDir("{$this->stubs}/element", getcwd() . "/{$name}", function ($file) use ($vars) {
+        Fs::copyDir("{$this->stubs}/element", $path, function ($file) use ($vars) {
             return Str::placeholder(file_get_contents($file), $vars);
         });
 
