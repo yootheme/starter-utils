@@ -1,0 +1,9 @@
+parameters:
+  level: 5
+
+  paths:
+    - src
+
+  excludePaths:
+    analyseAndScan:
+      - src/Console/stubs/*
