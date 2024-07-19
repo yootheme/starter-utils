@@ -4,7 +4,6 @@ namespace YOOtheme\Starter\Console;
 
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -31,7 +30,8 @@ class ElementCreateCommand extends Command
             throw new \RuntimeException("Element '{$path}' already exists.");
         }
 
-        $ask = $this->question($input, $output);
+        $fn = [$this->getHelper('question'), 'ask'];
+        $ask = $this->partial($fn, $input, $output);
         $title = $ask(new Question('Enter the element title: ', $name));
 
         $vars = [
@@ -39,22 +39,19 @@ class ElementCreateCommand extends Command
             'TITLE' => $title,
         ];
 
-        Fs::copyDir("{$this->stubs}/element", $path, function ($file) use ($vars) {
-            return Str::placeholder(file_get_contents($file), $vars);
-        });
+        Fs::copyDir(
+            "{$this->stubs}/element",
+            $path,
+            fn($file) => Str::placeholder(file_get_contents($file), $vars),
+        );
 
         $output->writeln('Element created successfully.');
 
         return Command::SUCCESS;
     }
 
-    protected function question(InputInterface $input, OutputInterface $output): callable
+    protected function partial(callable $func, ...$args): callable
     {
-        /** @var QuestionHelper $question */
-        $question = $this->getHelper('question');
-
-        return function (...$args) use ($input, $output, $question) {
-            return $question->ask($input, $output, ...$args);
-        };
+        return fn(...$rest) => $func(...[...$args, ...$rest]);
     }
 }
