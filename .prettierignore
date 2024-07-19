@@ -2,6 +2,7 @@
 !/*.js
 !/*.json
 !/*.xml
+!/.github
 !/src
 
 /package-lock.json
