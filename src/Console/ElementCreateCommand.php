@@ -52,6 +52,6 @@ class ElementCreateCommand extends Command
 
     protected function partial(callable $func, ...$args): callable
     {
-        return fn(...$rest) => $func(...[...$args, ...$rest]);
+        return fn(...$rest) => $func(...$args, ...$rest);
     }
 }
