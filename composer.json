@@ -20,6 +20,6 @@
     },
     "scripts": {
         "phpstan": "phpstan analyse -c phpstan.neon",
-        "create:element": "YOOtheme\\Starter\\Console\\ElementCreateCommand"
+        "create:element": "YOOtheme\\Starter\\CreateElementCommand"
     }
 }

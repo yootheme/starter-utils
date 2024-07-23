@@ -6,4 +6,4 @@ parameters:
 
   excludePaths:
     analyseAndScan:
-      - src/Console/stubs/*
+      - src/stubs/*

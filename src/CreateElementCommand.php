@@ -1,6 +1,6 @@
 <?php
 
-namespace YOOtheme\Starter\Console;
+namespace YOOtheme\Starter;
 
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -14,7 +14,7 @@ use Symfony\Component\Finder\Finder;
 use YOOtheme\Starter\StringHelper as Str;
 
 #[AsCommand(name: 'create:element', description: 'Create a new element')]
-class ElementCreateCommand extends Command
+class CreateElementCommand extends Command
 {
     protected string $stubs = __DIR__ . '/stubs';
 
