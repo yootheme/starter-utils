@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Finder\Finder;
 use YOOtheme\Starter\StringHelper as Str;
 
@@ -25,7 +26,7 @@ class ElementCreateCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $name = $input->getArgument('name');
-        $path = getcwd() . DIRECTORY_SEPARATOR . $name;
+        $path = Path::join(getcwd(), $name);
 
         if (file_exists($path)) {
             throw new \RuntimeException("Element '{$path}' already exists.");
