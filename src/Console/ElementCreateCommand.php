@@ -8,7 +8,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
-use YOOtheme\Starter\FilesystemHelper as Fs;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 use YOOtheme\Starter\StringHelper as Str;
 
 #[AsCommand(name: 'create:element', description: 'Create a new element')]
@@ -24,7 +25,7 @@ class ElementCreateCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $name = $input->getArgument('name');
-        $path = Fs::getCwd($name);
+        $path = getcwd() . DIRECTORY_SEPARATOR . $name;
 
         if (file_exists($path)) {
             throw new \RuntimeException("Element '{$path}' already exists.");
@@ -34,16 +35,16 @@ class ElementCreateCommand extends Command
         $ask = $this->partial($fn, $input, $output);
         $title = $ask(new Question('Enter the element title: ', $name));
 
-        $vars = [
-            'NAME' => $name,
-            'TITLE' => $title,
-        ];
+        $fs = new Filesystem();
+        $finder = (new Finder())->in("{$this->stubs}/element");
+        $variables = ['NAME' => $name, 'TITLE' => $title];
 
-        Fs::copyDir(
-            "{$this->stubs}/element",
-            $path,
-            fn($file) => Str::placeholder(file_get_contents($file), $vars),
-        );
+        foreach ($finder->files() as $file) {
+            $fs->dumpFile(
+                "{$path}/{$file->getRelativePathname()}",
+                Str::placeholder($file->getContents(), $variables),
+            );
+        }
 
         $output->writeln('Element created successfully.');
 
