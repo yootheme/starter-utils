@@ -17,6 +17,7 @@
         "symfony/console": "^5.4|^6.0|^7.0"
     },
     "scripts": {
-        "phpstan": "phpstan analyse -c phpstan.neon"
+        "phpstan": "phpstan analyse -c phpstan.neon",
+        "create:element": "YOOtheme\\Starter\\Console\\ElementCreateCommand"
     }
 }
