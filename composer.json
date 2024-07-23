@@ -17,10 +17,6 @@
         "symfony/console": "^5.4|^6.0|^7.0"
     },
     "scripts": {
-        "phpstan": "phpstan analyse -c phpstan.neon",
-        "yootheme": "php ./bin/yootheme"
-    },
-    "bin": [
-        "bin/yootheme"
-    ]
+        "phpstan": "phpstan analyse -c phpstan.neon"
+    }
 }
