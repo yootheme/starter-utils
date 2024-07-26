@@ -2,19 +2,27 @@
     "name": "yootheme/starter-utils",
     "description": "YOOtheme Pro - Starter Utilities",
     "license": "MIT",
+    "keywords": [
+        "joomla",
+        "wordpress",
+        "yootheme"
+    ],
     "homepage": "https://yootheme.com",
     "support": {
         "issues": "https://github.com/yootheme/starter-utils/issues",
         "source": "https://github.com/yootheme/starter-utils"
     },
-    "autoload": {
-        "psr-4": {
-            "YOOtheme\\Starter\\": "src"
-        }
+    "require": {
+        "php": "^8.0"
     },
     "require-dev": {
         "composer/composer": "^2.7",
         "phpstan/phpstan": "^1.11"
+    },
+    "autoload": {
+        "psr-4": {
+            "YOOtheme\\Starter\\": "src"
+        }
     },
     "scripts": {
         "phpstan": "phpstan analyse -c phpstan.neon",
