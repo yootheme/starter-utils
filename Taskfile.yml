@@ -1,0 +1,36 @@
+version: '3'
+
+env:
+  TASK_DIR: '{{.ROOT_DIR}}'
+  TASK_FILE: '{{.ROOT_TASKFILE}}'
+
+tasks:
+  copy:
+    dir: '{{.TASKFILE_DIR}}'
+    env:
+      TASK_CWD: '{{.cwd}}'
+    cmds:
+      - composer run:task -q -- copy {{q .src}} {{q .dest}} {{if .ignore}}{{.ignore}}{{end}}
+    requires:
+      vars: [src, dest]
+    internal: true
+
+  placeholder:
+    dir: '{{.TASKFILE_DIR}}'
+    env:
+      TASK_CWD: '{{.cwd}}'
+    cmds:
+      - composer run:task -q -- placeholder {{q .src}} {{q (toRawJson .vars)}}
+    requires:
+      vars: [src, vars]
+    internal: true
+
+  zip:
+    dir: '{{.TASKFILE_DIR}}'
+    env:
+      TASK_CWD: '{{.cwd}}'
+    cmds:
+      - composer run:task -q -- zip {{q .src}} {{q .dest}} {{if .ignore}}{{.ignore}}{{end}}
+    requires:
+      vars: [src, dest]
+    internal: true

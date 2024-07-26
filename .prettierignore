@@ -2,6 +2,7 @@
 !/*.js
 !/*.json
 !/*.xml
+!/*.yml
 !/.github
 !/src
 
