@@ -19,9 +19,9 @@ tasks:
     env:
       TASK_CWD: '{{.cwd}}'
     cmds:
-      - composer run:task -q -- placeholder {{q .src}} {{q (toRawJson .vars)}}
+      - composer run:task -q -- placeholder {{q .src}} {{q (toRawJson .replace)}} {{if .ignore}}{{.ignore}}{{end}}
     requires:
-      vars: [src, vars]
+      vars: [src, replace]
     internal: true
 
   zip:

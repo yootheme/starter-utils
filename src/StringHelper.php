@@ -4,14 +4,10 @@ namespace YOOtheme\Starter;
 
 class StringHelper
 {
-    public static function placeholder(string $data, array $vars): string
+    public static function placeholder(string $str, array $replace): string
     {
-        $replace = [];
+        $callback = fn($matches) => $replace[$matches[1]] ?? $matches[0];
 
-        foreach ($vars as $key => $value) {
-            $replace["{{ {$key} }}"] = $value;
-        }
-
-        return str_replace(array_keys($replace), array_values($replace), $data);
+        return preg_replace_callback('/{{\s*(\w+?)\s*}}/', $callback, $str);
     }
 }

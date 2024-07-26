@@ -43,11 +43,11 @@ class TaskHelper
             " to '{$dest}'\n";
     }
 
-    public function placeholder(string $src, string $vars): void
+    public function placeholder(string $src, string $replace, string $ignore = ''): void
     {
         $fs = new Filesystem();
-        $files = self::findFiles($this->cwd, $src);
-        $variables = json_decode($vars, true);
+        $files = self::findFiles($this->cwd, $src, $ignore);
+        $variables = json_decode($replace, true);
 
         foreach ($files as $file) {
             $fs->dumpFile($file->getPathname(), Str::placeholder($file->getContents(), $variables));
