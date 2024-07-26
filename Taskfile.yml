@@ -1,12 +1,11 @@
 version: '3'
 
 env:
-  TASK_DIR: '{{.ROOT_DIR}}'
-  TASK_FILE: '{{.ROOT_TASKFILE}}'
+  ROOT_DIR: '{{.ROOT_DIR}}'
 
 tasks:
   copy:
-    dir: '{{.TASKFILE_DIR}}'
+    dir: '{{.ROOT_DIR}}'
     env:
       TASK_CWD: '{{.cwd}}'
     cmds:
@@ -16,7 +15,7 @@ tasks:
     internal: true
 
   placeholder:
-    dir: '{{.TASKFILE_DIR}}'
+    dir: '{{.ROOT_DIR}}'
     env:
       TASK_CWD: '{{.cwd}}'
     cmds:
@@ -26,7 +25,7 @@ tasks:
     internal: true
 
   zip:
-    dir: '{{.TASKFILE_DIR}}'
+    dir: '{{.ROOT_DIR}}'
     env:
       TASK_CWD: '{{.cwd}}'
     cmds:

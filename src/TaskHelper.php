@@ -10,17 +10,22 @@ use Symfony\Component\Finder\Glob;
 use YOOtheme\Starter\StringHelper as Str;
 use ZipArchive;
 
-require_once __DIR__ . '/StringHelper.php';
-
 class TaskHelper
 {
+    /**
+     * The absolute path of the root Taskfile directory.
+     */
+    protected string $dir;
+
+    /**
+     * The current working directory task variable.
+     */
     protected string $cwd;
 
     public function __construct(protected array $env)
     {
+        $this->dir = $env['ROOT_DIR'] ?? '';
         $this->cwd = $env['TASK_CWD'] ?? '';
-
-        chdir($env['TASK_DIR']);
     }
 
     public function copy(string $src, string $dest, string $ignore = ''): void
