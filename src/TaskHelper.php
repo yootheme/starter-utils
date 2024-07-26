@@ -31,33 +31,53 @@ class TaskHelper
     public function copy(string $src, string $dest, string $ignore = ''): void
     {
         $fs = new Filesystem();
-        $files = self::findFiles($this->cwd, $src, $ignore);
+        $files = self::glob($this->cwd, $src, $ignore);
+        $count = count($files->files());
 
         foreach ($files as $file) {
             $to = self::resolvePath($dest, $file->getRelativePathname());
             $fs->copy($file->getPathname(), $to, true);
         }
 
-        echo "Copied {$files->count()} file" .
-            ($files->count() !== 1 ? 's' : '') .
-            " to '{$dest}'\n";
+        echo "Copied {$count} file" . ($count !== 1 ? 's' : '') . " to '{$dest}'\n";
+    }
+
+    public function remove(string $src, string $ignore = ''): void
+    {
+        $fs = new Filesystem();
+        $files = self::glob($this->cwd, $src, $ignore);
+        $count = [0, 0]; // [files, directories]
+
+        foreach ([...$files->files(), ...$files->directories()] as $file) {
+            $count[intval($file->isDir())]++;
+            $fs->remove($file->getPathname());
+        }
+
+        echo "Removed {$count[0]} file" .
+            ($count[0] !== 1 ? 's' : '') .
+            ", {$count[1]} director" .
+            ($count[1] === 1 ? 'y' : 'ies') .
+            "\n";
     }
 
     public function placeholder(string $src, string $replace, string $ignore = ''): void
     {
         $fs = new Filesystem();
-        $files = self::findFiles($this->cwd, $src, $ignore);
-        $variables = json_decode($replace, true);
+        $files = self::glob($this->cwd, $src, $ignore);
 
-        foreach ($files as $file) {
-            $fs->dumpFile($file->getPathname(), Str::placeholder($file->getContents(), $variables));
+        foreach ($files->files() as $file) {
+            $fs->dumpFile(
+                $file->getPathname(),
+                Str::placeholder($file->getContents(), json_decode($replace, true)),
+            );
         }
     }
 
     public function zip(string $src, string $dest, string $ignore = ''): void
     {
         $zip = new ZipArchive();
-        $files = self::findFiles($this->cwd, $src, $ignore);
+        $files = self::glob($this->cwd, $src, $ignore);
+        $count = count($files->files());
 
         if (!$zip->open($dest, ZipArchive::CREATE | ZipArchive::OVERWRITE)) {
             throw new \RuntimeException("Failed to create archive '{$dest}'");
@@ -71,9 +91,7 @@ class TaskHelper
 
         $zip->close();
 
-        echo "Created '{$dest}' ({$files->count()} file" .
-            ($files->count() !== 1 ? 's' : '') .
-            ")\n";
+        echo "Created '{$dest}' ({$count} file" . ($count !== 1 ? 's' : '') . ")\n";
     }
 
     public static function run(Event $event): void
@@ -86,6 +104,21 @@ class TaskHelper
         }
 
         call_user_func_array([new self($_SERVER), $task], $args);
+    }
+
+    protected static function glob(string $path, string $src, string $ignore = ''): Finder
+    {
+        $finder = Finder::create()->in(self::resolvePath($path));
+
+        foreach (array_filter(explode(' ', $src)) as $glob) {
+            $finder->path(self::toRegex($glob));
+        }
+
+        foreach (array_filter(explode(' ', $ignore)) as $glob) {
+            $finder->notPath(self::toRegex($glob));
+        }
+
+        return $finder;
     }
 
     protected static function toRegex(string $path): string
@@ -109,20 +142,5 @@ class TaskHelper
         }
 
         return ($result = Path::join(...$parts)) !== '/' ? rtrim($result, '/') : $result;
-    }
-
-    protected static function findFiles(string $path, string $src, string $ignore = ''): Finder
-    {
-        $finder = Finder::create()->in(self::resolvePath($path));
-
-        foreach (array_filter(explode(' ', $src)) as $glob) {
-            $finder->path(self::toRegex($glob));
-        }
-
-        foreach (array_filter(explode(' ', $ignore)) as $glob) {
-            $finder->notPath(self::toRegex($glob));
-        }
-
-        return $finder->files();
     }
 }

@@ -14,6 +14,16 @@ tasks:
       vars: [src, dest]
     internal: true
 
+  remove:
+    dir: '{{.ROOT_DIR}}'
+    env:
+      TASK_CWD: '{{.cwd}}'
+    cmds:
+      - composer run:task -q -- remove {{q .src}} {{if .ignore}}{{.ignore}}{{end}}
+    requires:
+      vars: [src]
+    internal: true
+
   placeholder:
     dir: '{{.ROOT_DIR}}'
     env:
