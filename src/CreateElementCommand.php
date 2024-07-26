@@ -25,18 +25,20 @@ class CreateElementCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $fs = new Filesystem();
+        $cwd = getcwd();
+
         $name = $input->getArgument('name');
-        $path = Path::join(getcwd(), $name);
+        $path = Path::join($cwd, 'elements', $name);
 
         if (file_exists($path)) {
-            throw new \RuntimeException("Element '{$path}' already exists.");
+            throw new \RuntimeException("Element '{$path}' already exists");
         }
 
         $fn = [$this->getHelper('question'), 'ask'];
         $ask = $this->partial($fn, $input, $output);
         $title = $ask(new Question('Enter the element title: ', $name));
 
-        $fs = new Filesystem();
         $finder = (new Finder())->in("{$this->stubs}/element");
         $variables = ['NAME' => $name, 'TITLE' => $title];
 
