@@ -9,7 +9,7 @@ tasks:
     env:
       TASK_CWD: '{{.cwd}}'
     cmds:
-      - composer run:task -q -- copy {{q .src}} {{q .dest}} {{if .ignore}}{{.ignore}}{{end}}
+      - composer run:task -q -- copy {{q .src}} {{q .dest}} {{if .ignore}}{{q .ignore}}{{end}}
     requires:
       vars: [src, dest]
     internal: true
@@ -19,7 +19,7 @@ tasks:
     env:
       TASK_CWD: '{{.cwd}}'
     cmds:
-      - composer run:task -q -- remove {{q .src}} {{if .ignore}}{{.ignore}}{{end}}
+      - composer run:task -q -- remove {{q .src}} {{if .ignore}}{{q .ignore}}{{end}}
     requires:
       vars: [src]
     internal: true
@@ -29,7 +29,7 @@ tasks:
     env:
       TASK_CWD: '{{.cwd}}'
     cmds:
-      - composer run:task -q -- placeholder {{q .src}} {{q (toRawJson .replace)}} {{if .ignore}}{{.ignore}}{{end}}
+      - composer run:task -q -- placeholder {{q .src}} {{q (toRawJson .replace)}} {{if .ignore}}{{q .ignore}}{{end}}
     requires:
       vars: [src, replace]
     internal: true
@@ -39,7 +39,7 @@ tasks:
     env:
       TASK_CWD: '{{.cwd}}'
     cmds:
-      - composer run:task -q -- zip {{q .src}} {{q .dest}} {{if .ignore}}{{.ignore}}{{end}}
+      - composer run:task -q -- zip {{q .src}} {{q .dest}} {{if .ignore}}{{q .ignore}}{{end}}
     requires:
       vars: [src, dest]
     internal: true
