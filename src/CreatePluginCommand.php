@@ -29,7 +29,6 @@ class CreatePluginCommand extends Command
         $cwd = getcwd();
 
         $name = $input->getArgument('name');
-        $path = Path::join($cwd, 'build');
 
         $fn = [$this->getHelper('question'), 'ask'];
         $ask = $this->partial($fn, $input, $output);
@@ -47,10 +46,20 @@ class CreatePluginCommand extends Command
             'TITLE' => $ask(new Question('Enter plugin title: ', $name)),
         ];
 
+        $questions = $variables + [
+            'DESCRIPTION' => $ask(new Question('Enter plugin description: ')),
+            'AUTHOR' => $ask(new Question('Enter author name: ')),
+            'AUTHOREMAIL' => $ask(new Question('Enter author email: ')),
+            'AUTHORURL' => $ask(new Question('Enter author url: ')),
+        ];
+
         foreach ($finder->files() as $file) {
             $fs->dumpFile(
-                strtr("{$path}/{$file->getRelativePathname()}", $filemap),
-                Str::placeholder($file->getContents(), $variables),
+                strtr("{$cwd}/{$file->getRelativePathname()}", $filemap),
+                Str::placeholder(
+                    $file->getContents(),
+                    $file->getBasename() === 'Taskfile.yml' ? $questions : $variables,
+                ),
             );
         }
 
