@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<extension type="plugin" group="system" method="upgrade">
+    <name>{{TITLE}}</name>
+    <version>{{VERSION}}</version>
+    <description>{{DESCRIPTION}}</description>
+    <creationDate>{{DATE}}</creationDate>
+    <copyright>{{COPYRIGHT}}</copyright>
+    <license>{{LICENSE}}</license>
+    <author>{{AUTHOR}}</author>
+    <authorEmail>{{AUTHOREMAIL}}</authorEmail>
+    <authorUrl>{{AUTHORURL}}</authorUrl>
+    <files>
+        <filename plugin="{{PLUGIN}}">{{PLUGIN}}.php</filename>
+    </files>
+</extension>

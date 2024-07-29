@@ -27,6 +27,7 @@
     "scripts": {
         "phpstan": "phpstan analyse -c phpstan.neon",
         "run:task": "YOOtheme\\Starter\\TaskHelper::run",
+        "create:plugin": "YOOtheme\\Starter\\CreatePluginCommand",
         "create:element": "YOOtheme\\Starter\\CreateElementCommand"
     }
 }
