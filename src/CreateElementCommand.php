@@ -13,7 +13,7 @@ use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Finder\Finder;
 use YOOtheme\Starter\StringHelper as Str;
 
-#[AsCommand(name: 'create:element', description: 'Create a new element')]
+#[AsCommand(name: 'create:element', description: 'Create an element')]
 class CreateElementCommand extends Command
 {
     protected string $stubs = __DIR__ . '/stubs';
@@ -37,10 +37,12 @@ class CreateElementCommand extends Command
 
         $fn = [$this->getHelper('question'), 'ask'];
         $ask = $this->partial($fn, $input, $output);
-        $title = $ask(new Question('Enter the element title: ', $name));
-
         $finder = (new Finder())->in("{$this->stubs}/element");
-        $variables = ['NAME' => $name, 'TITLE' => $title];
+
+        $variables = [
+            'NAME' => $name,
+            'TITLE' => $ask(new Question('Enter element title: ', $name)),
+        ];
 
         foreach ($finder->files() as $file) {
             $fs->dumpFile(
