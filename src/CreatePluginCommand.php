@@ -42,7 +42,7 @@ class CreatePluginCommand extends Command
         $variables = [
             'NAME' => $name,
             'PLUGIN' => $name,
-            'PLUGIN_CLASS' => 'plgSystem' . strtr($name, ['-' => '', '_' => '']),
+            'PLUGIN_CLASS' => 'plgSystem' . ucfirst(strtr($name, ['-' => '', '_' => ''])),
             'TITLE' => $ask(new Question('Enter plugin title: ', $name)),
         ];
 
@@ -61,6 +61,14 @@ class CreatePluginCommand extends Command
                     $file->getBasename() === 'Taskfile.yml' ? $questions : $variables,
                 ),
             );
+        }
+
+        if ($ask(new Question('Do you want to create a module?', 'yes')) === 'yes') {
+            $finder = (new Finder())->in("{$this->stubs}/module");
+
+            foreach ($finder->files() as $file) {
+                $fs->dumpFile("{$file->getRelativePathname()}", $file->getContents());
+            }
         }
 
         $output->writeln("Plugin '{$name}' created successfully.");
