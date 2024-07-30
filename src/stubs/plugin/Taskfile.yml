@@ -18,7 +18,7 @@ tasks:
   build:
     deps:
       - for: [joomla, wordpress]
-        task: build-{{ .ITEM }}
+        task: build-{{.ITEM}}
 
   build-joomla:
     cmds:
@@ -42,7 +42,7 @@ tasks:
         vars:
           cwd: dist/joomla
           src: '**'
-          dest: dist/{{ .NAME }}-{{ .VERSION }}.zip
+          dest: dist/{{.NAME}}-{{.VERSION}}.zip
 
       #- defer:
       #    task: clear-dist-joomla
@@ -69,7 +69,7 @@ tasks:
         vars:
           cwd: dist/wordpress
           src: '**'
-          dest: dist/wp-{{ .NAME }}-{{ .VERSION }}.zip
+          dest: dist/wp-{{.NAME}}-{{.VERSION}}.zip
 
       - defer:
           task: clear-dist-wordpress
@@ -80,7 +80,7 @@ tasks:
       - task: utils:copy
         vars:
           src: 'bootstrap.php'
-          dest: dist/{{ .SYSTEM }}
+          dest: dist/{{.SYSTEM}}
 
   copy-elements:
     internal: true
@@ -89,7 +89,7 @@ tasks:
         vars:
           cwd: elements
           src: '**'
-          dest: dist/{{ .SYSTEM }}/elements
+          dest: dist/{{.SYSTEM}}/elements
 
   placeholder-joomla:
     internal: true
@@ -100,34 +100,34 @@ tasks:
           replace:
             ref: >
               dict
-              "AUTHOR" "{{ .AUTHOR }}"
-              "AUTHOREMAIL" "{{ .AUTHOREMAIL }}"
-              "AUTHORURL" "{{ .AUTHORURL }}"
-              "COPYRIGHT" "{{ .COPYRIGHT }}"
-              "DATE" "{{ .DATE }}"
-              "DESCRIPTION" "{{ .DESCRIPTION }}"
-              "LICENSE" "{{ .LICENSE }}"
-              "NAME" "{{ .NAME }}"
-              "VERSION" "{{ .VERSION }}"
+              "AUTHOR" "{{.AUTHOR}}"
+              "AUTHOREMAIL" "{{.AUTHOREMAIL}}"
+              "AUTHORURL" "{{.AUTHORURL}}"
+              "COPYRIGHT" "{{.COPYRIGHT}}"
+              "DATE" "{{.DATE}}"
+              "DESCRIPTION" "{{.DESCRIPTION}}"
+              "LICENSE" "{{.LICENSE}}"
+              "NAME" "{{.NAME}}"
+              "VERSION" "{{.VERSION}}"
 
   placeholder-wordpress:
     internal: true
     cmds:
       - task: utils:placeholder
         vars:
-          src: dist/wordpress/{{ .NAME }}.php
+          src: dist/wordpress/{{.NAME}}.php
           replace:
             ref: >
               dict
-              "AUTHOR" "{{ .AUTHOR }}"
-              "AUTHOREMAIL" "{{ .AUTHOREMAIL }}"
-              "AUTHORURL" "{{ .AUTHORURL }}"
-              "COPYRIGHT" "{{ .COPYRIGHT }}"
-              "DATE" "{{ .DATE }}"
-              "DESCRIPTION" "{{ .DESCRIPTION }}"
-              "LICENSE" "{{ .LICENSE }}"
-              "NAME" "{{ .NAME }}"
-              "VERSION" "{{ .VERSION }}"
+              "AUTHOR" "{{.AUTHOR}}"
+              "AUTHOREMAIL" "{{.AUTHOREMAIL}}"
+              "AUTHORURL" "{{.AUTHORURL}}"
+              "COPYRIGHT" "{{.COPYRIGHT}}"
+              "DATE" "{{.DATE}}"
+              "DESCRIPTION" "{{.DESCRIPTION}}"
+              "LICENSE" "{{.LICENSE}}"
+              "NAME" "{{.NAME}}"
+              "VERSION" "{{.VERSION}}"
 
   clear-dist-joomla:
     internal: true
