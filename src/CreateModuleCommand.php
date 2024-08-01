@@ -40,7 +40,7 @@ class CreateModuleCommand extends Command
             ->name('bootstrap.php')
             ->in("{$this->stubs}/module");
 
-        if ($ask(new ConfirmationQuestion('Create module assets example?', true))) {
+        if ($ask(new ConfirmationQuestion('Create module assets example? [Y/n] ', true))) {
             $finder->append($finder->name(['AssetsListener.php', 'custom.js', 'custom.css']));
         }
 
