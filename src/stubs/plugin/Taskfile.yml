@@ -32,10 +32,6 @@ tasks:
         vars:
           SYSTEM: joomla
 
-      - task: copy-elements
-        vars:
-          SYSTEM: joomla
-
       - task: placeholder-joomla
 
       - task: utils:zip
@@ -44,8 +40,8 @@ tasks:
           src: '**'
           dest: dist/{{.NAME}}-{{.VERSION}}.zip
 
-      #- defer:
-      #    task: clear-dist-joomla
+      - defer:
+          task: clear-dist-joomla
 
   build-wordpress:
     cmds:
@@ -56,10 +52,6 @@ tasks:
           dest: dist/wordpress
 
       - task: copy-module
-        vars:
-          SYSTEM: wordpress
-
-      - task: copy-elements
         vars:
           SYSTEM: wordpress
 
@@ -81,15 +73,6 @@ tasks:
         vars:
           src: modules/**
           dest: dist/{{.SYSTEM}}
-
-  copy-elements:
-    internal: true
-    cmds:
-      - task: utils:copy
-        vars:
-          cwd: elements
-          src: '**'
-          dest: dist/{{.SYSTEM}}/elements
 
   placeholder-joomla:
     internal: true
