@@ -7,21 +7,19 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Finder\Finder;
-use YOOtheme\Starter\StringHelper as Str;
 
-#[AsCommand(name: 'create:element', description: 'Create an element')]
-class CreateElementCommand extends Command
+#[AsCommand(name: 'create:module', description: 'Create a module')]
+class CreateModuleCommand extends Command
 {
     protected string $stubs = __DIR__ . '/stubs';
 
     protected function configure()
     {
         $this->addArgument('name', InputArgument::REQUIRED);
-        $this->addArgument('module', InputArgument::OPTIONAL);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -30,33 +28,27 @@ class CreateElementCommand extends Command
         $cwd = getcwd();
 
         $name = $input->getArgument('name');
-        if ($module = $input->getArgument('module')) {
-            $module = "modules/$module";
-        }
-
-        $path = Path::join($cwd, $module ?? '', 'elements', $name);
+        $path = Path::join($cwd, 'modules', $name);
 
         if (file_exists($path)) {
-            throw new \RuntimeException("Element '{$path}' already exists");
+            throw new \RuntimeException("Module '{$path}' already exists");
         }
 
         $fn = [$this->getHelper('question'), 'ask'];
         $ask = $this->partial($fn, $input, $output);
-        $finder = (new Finder())->in("{$this->stubs}/element");
+        $finder = (new Finder())
+            ->name('bootstrap.php')
+            ->in("{$this->stubs}/module");
 
-        $variables = [
-            'NAME' => $name,
-            'TITLE' => $ask(new Question('Enter element title: ', $name)),
-        ];
-
-        foreach ($finder->files() as $file) {
-            $fs->dumpFile(
-                "{$path}/{$file->getRelativePathname()}",
-                Str::placeholder($file->getContents(), $variables),
-            );
+        if ($ask(new ConfirmationQuestion('Create module assets example?', true))) {
+            $finder->append($finder->name(['AssetsListener.php', 'custom.js', 'custom.css']));
         }
 
-        $output->writeln('Element created successfully.');
+        foreach ($finder->files() as $file) {
+            $fs->dumpFile("{$path}/{$file->getRelativePathname()}", $file->getContents());
+        }
+
+        $output->writeln('Module created successfully.');
 
         return Command::SUCCESS;
     }

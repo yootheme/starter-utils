@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Finder\Finder;
@@ -61,14 +62,6 @@ class CreatePluginCommand extends Command
                     $file->getBasename() === 'Taskfile.yml' ? $questions : $variables,
                 ),
             );
-        }
-
-        if ($ask(new Question('Do you want to create a module?', 'yes')) === 'yes') {
-            $finder = (new Finder())->in("{$this->stubs}/module");
-
-            foreach ($finder->files() as $file) {
-                $fs->dumpFile("{$file->getRelativePathname()}", $file->getContents());
-            }
         }
 
         $output->writeln("Plugin '{$name}' created successfully.");

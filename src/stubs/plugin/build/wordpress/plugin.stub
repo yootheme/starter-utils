@@ -21,4 +21,6 @@ if (!class_exists(Application::class, false)) {
     return;
 }
 
-// Load plugin setup code ...
+// Load module from the same directory
+$app = Application::getInstance();
+$app->load(__DIR__ . '/modules/*/bootstrap.php');

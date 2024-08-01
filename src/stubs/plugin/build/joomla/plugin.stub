@@ -23,6 +23,8 @@ class {{PLUGIN_CLASS}} extends CMSPlugin
             return;
         }
 
-        // Load plugin setup code ...
+        // Load module from the same directory
+        $app = Application::getInstance();
+        $app->load(__DIR__ . '/modules/*/bootstrap.php');
     }
 }
