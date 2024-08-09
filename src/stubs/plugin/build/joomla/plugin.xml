@@ -11,5 +11,6 @@
     <authorUrl>{{AUTHORURL}}</authorUrl>
     <files>
         <filename plugin="{{PLUGIN}}">{{PLUGIN}}.php</filename>
+        <folder>modules</folder>
     </files>
 </extension>

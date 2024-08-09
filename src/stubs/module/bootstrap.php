@@ -3,15 +3,20 @@
 use YOOtheme\Builder;
 use YOOtheme\Path;
 
+// includes
+
 return [
-    // Set theme configuration values
-    'theme' => [],
+    'theme' => [
+        // add theme config ...
+    ],
 
-    // Register event handlers
-    'events' => [],
+    'events' => [
+        // add event handlers ...
+    ],
 
-    // Load builder elements
     'extend' => [
+        // extend container services ...
+
         Builder::class => function (Builder $builder) {
             $builder->addTypePath(Path::get('./elements/*/element.json'));
         },

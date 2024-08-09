@@ -1,0 +1,15 @@
+{
+    "sections": {
+        "my-section": {
+            "title": "My Section",
+            "width": 400,
+            "priority": 100,
+            "fields": {
+                "option_a": {
+                    "label": "Option A",
+                    "description": "A description text."
+                }
+            }
+        }
+    }
+}
