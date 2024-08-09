@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Finder\Finder;
@@ -36,6 +37,7 @@ class CreateModuleCommand extends Command
 
         $fn = [$this->getHelper('question'), 'ask'];
         $ask = $this->partial($fn, $input, $output);
+        $namespace = $ask(new Question('Enter module namespace: '));
         $assets = $ask(new ConfirmationQuestion('Add module assets example? [Y/n] ', true));
         $settings = $ask(new ConfirmationQuestion('Add settings example? [Y/n] ', true));
 
@@ -55,7 +57,15 @@ class CreateModuleCommand extends Command
             $fs->dumpFile("{$path}/{$file->getRelativePathname()}", $file->getContents());
         }
 
+        // namespace
+        $this->replaceInFile(
+            "{$path}/bootstrap.php",
+            ['#// namespace#'],
+            $namespace ? ["namespace {$namespace};"] : [''],
+        );
+
         if ($assets) {
+            // add AssetsListener
             $find = ['#// includes#', '#// add event handlers ...#'];
             $replace = [
                 "\${0}\ninclude_once __DIR__ . 'src/AssetsListener';",
@@ -65,9 +75,17 @@ class CreateModuleCommand extends Command
             ];
 
             $this->replaceInFile("{$path}/bootstrap.php", $find, $replace);
+
+            // namespace
+            $this->replaceInFile(
+                "{$path}/src/AssetsListener.php",
+                ['#// namespace#'],
+                $namespace ? ["namespace {$namespace};"] : [''],
+            );
         }
 
         if ($settings) {
+            // add SettingsListener
             $find = ['#// includes#', '#// add event handlers ...#'];
             $replace = [
                 "\${0}\ninclude_once __DIR__ . 'src/SettingsListener';",
@@ -77,6 +95,13 @@ class CreateModuleCommand extends Command
             ];
 
             $this->replaceInFile("{$path}/bootstrap.php", $find, $replace);
+
+            // namespace
+            $this->replaceInFile(
+                "{$path}/src/SettingsListener.php",
+                ['#// namespace#'],
+                $namespace ? ["namespace {$namespace};"] : [''],
+            );
         }
 
         $output->writeln('Module created successfully.');
