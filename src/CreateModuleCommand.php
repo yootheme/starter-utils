@@ -2,7 +2,6 @@
 
 namespace YOOtheme\Starter;
 
-use Composer\Command\FundCommand;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
