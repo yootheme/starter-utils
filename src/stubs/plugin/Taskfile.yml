@@ -4,7 +4,8 @@ includes:
   utils: vendor/yootheme/starter-utils
 
 vars:
-  NAME: '{{ TITLE }}'
+  TITLE: '{{ TITLE }}'
+  NAME: '{{ NAME }}'
   VERSION: '0.0.1'
   DESCRIPTION: '{{ DESCRIPTION }}'
   DATE: '{{ now | date "2006-01-02" }}'
@@ -38,7 +39,7 @@ tasks:
         vars:
           cwd: dist/joomla
           src: '**'
-          dest: dist/{{.NAME}}-{{.VERSION}}.zip
+          dest: dist/{{.NAME}}-j-{{.VERSION}}.zip
 
       - defer:
           task: clear-dist-joomla
@@ -61,7 +62,7 @@ tasks:
         vars:
           cwd: dist/wordpress
           src: '**'
-          dest: dist/wp-{{.NAME}}-{{.VERSION}}.zip
+          dest: dist/{{.NAME}}-wp-{{.VERSION}}.zip
 
       - defer:
           task: clear-dist-wordpress

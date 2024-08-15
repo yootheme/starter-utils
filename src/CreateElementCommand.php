@@ -7,6 +7,8 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Path;
@@ -29,31 +31,59 @@ class CreateElementCommand extends Command
         $fs = new Filesystem();
         $cwd = getcwd();
 
+        $fn = [$this->getHelper('question'), 'ask'];
+        $ask = $this->partial($fn, $input, $output);
+
         $name = $input->getArgument('name');
         if ($module = $input->getArgument('module')) {
             $module = "modules/$module";
+        } else {
+            if ($modules = glob(Path::join($cwd, 'modules', '*'), GLOB_ONLYDIR)) {
+                $module = $ask(
+                    new ChoiceQuestion(
+                        'Select module: (defaults to first)',
+                        array_map(fn($module) => basename($module), $modules),
+                        0,
+                    ),
+                );
+            } else {
+                throw new \RuntimeException(
+                    'Create a module first with command `composer create:module`',
+                );
+            }
+
+            $module = "modules/$module";
         }
 
-        $path = Path::join($cwd, $module ?? '', 'elements', $name);
+        $finders = [
+            $name => (new Finder())->in("{$this->stubs}/element"),
+        ];
 
-        if (file_exists($path)) {
-            throw new \RuntimeException("Element '{$path}' already exists");
+        if ($ask(new ConfirmationQuestion('Create multiple items element? [y/N] ', false))) {
+            $finders = [
+                $name => (new Finder())->in("{$this->stubs}/multiple"),
+                "{$name}_item" => (new Finder())->in("{$this->stubs}/multiple_item"),
+            ];
         }
-
-        $fn = [$this->getHelper('question'), 'ask'];
-        $ask = $this->partial($fn, $input, $output);
-        $finder = (new Finder())->in("{$this->stubs}/element");
 
         $variables = [
             'NAME' => $name,
             'TITLE' => $ask(new Question('Enter element title: ', $name)),
         ];
 
-        foreach ($finder->files() as $file) {
-            $fs->dumpFile(
-                "{$path}/{$file->getRelativePathname()}",
-                Str::placeholder($file->getContents(), $variables),
-            );
+        foreach ($finders as $name => $finder) {
+            $path = Path::join($cwd, $module, 'elements', $name);
+
+            if (file_exists($path)) {
+                throw new \RuntimeException("Element '{$path}' already exists");
+            }
+
+            foreach ($finder->files() as $file) {
+                $fs->dumpFile(
+                    "{$path}/{$file->getRelativePathname()}",
+                    Str::placeholder($file->getContents(), $variables),
+                );
+            }
         }
 
         $output->writeln('Element created successfully.');
