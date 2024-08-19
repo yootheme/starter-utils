@@ -153,6 +153,13 @@ class CreateModuleCommand extends Command
             ];
 
             $this->replaceInFile("{$path}/bootstrap.php", $find, $replace);
+
+            // namespace
+            $this->replaceInFile(
+                "{$path}/src/StyleListener.php",
+                ['#// namespace#'],
+                ["namespace {$namespace};"],
+            );
         }
 
         $output->writeln('Module created successfully.');
