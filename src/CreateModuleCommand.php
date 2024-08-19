@@ -38,7 +38,7 @@ class CreateModuleCommand extends Command
         $fn = [$this->getHelper('question'), 'ask'];
         $ask = $this->partial($fn, $input, $output);
         $namespace = $ask(new Question('Enter module namespace: '));
-        $assets = $ask(new ConfirmationQuestion('Add module assets example? [Y/n] ', true));
+        $assets = $ask(new ConfirmationQuestion('Add asset files example? [Y/n] ', true));
         $settings = $ask(new ConfirmationQuestion('Add settings example? [Y/n] ', true));
 
         $finder = (new Finder())
