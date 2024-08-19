@@ -37,31 +37,58 @@ class CreateModuleCommand extends Command
 
         $fn = [$this->getHelper('question'), 'ask'];
         $ask = $this->partial($fn, $input, $output);
-        $namespace = $ask(new Question('Enter module namespace: '));
-        $assets = $ask(new ConfirmationQuestion('Add asset files example? [Y/n] ', true));
-        $settings = $ask(new ConfirmationQuestion('Add settings example? [Y/n] ', true));
 
-        $finder = (new Finder())
-            ->name('bootstrap.php')
-            ->in("{$this->stubs}/module");
+        $namespace = new Question('Enter module namespace: ');
+        $namespace->setNormalizer(fn($value) => $value ?? '');
+        $namespace->setValidator(function ($value) {
+            if ('' === trim($value)) {
+                throw new \Exception('The namespace cannot be empty');
+            }
+
+            return $value;
+        });
+        $namespace->setMaxAttempts(10);
+        $namespace = $ask($namespace);
+
+        $assets = $ask(new ConfirmationQuestion('Add assets files example? [y/N] ', false));
+        $settings = $ask(new ConfirmationQuestion('Add settings example? [y/N] ', false));
+        $less = $ask(new ConfirmationQuestion('Add custom LESS example? [y/N] ', false));
+
+        $finders = [
+            'module' => (new Finder())
+                ->name('bootstrap.php')
+                ->in("{$this->stubs}/module"),
+        ];
 
         if ($assets) {
-            $finder->append($finder->name(['AssetsListener.php', 'custom.js', 'custom.css']));
+            $finders['assets'] = (new Finder())
+                ->name(['AssetsListener.php', 'custom.js', 'custom.css'])
+                ->in("{$this->stubs}/module");
         }
 
         if ($settings) {
-            $finder->append($finder->name(['SettingsListener.php', 'customizer.json']));
+            $finders['settings'] = (new Finder())
+                ->name(['SettingsListener.php', 'customizer.json'])
+                ->in("{$this->stubs}/module");
         }
 
-        foreach ($finder->files() as $file) {
-            $fs->dumpFile("{$path}/{$file->getRelativePathname()}", $file->getContents());
+        if ($less) {
+            $finders['less'] = (new Finder())
+                ->name(['StyleListener.php', 'my-component.less'])
+                ->in("{$this->stubs}/module");
+        }
+
+        foreach ($finders as $name => $finder) {
+            foreach ($finder->files() as $file) {
+                $fs->dumpFile("{$path}/{$file->getRelativePathname()}", $file->getContents());
+            }
         }
 
         // namespace
         $this->replaceInFile(
             "{$path}/bootstrap.php",
             ['#// namespace#'],
-            $namespace ? ["namespace {$namespace};"] : [''],
+            ["namespace {$namespace};"],
         );
 
         if ($assets) {
@@ -80,7 +107,7 @@ class CreateModuleCommand extends Command
             $this->replaceInFile(
                 "{$path}/src/AssetsListener.php",
                 ['#// namespace#'],
-                $namespace ? ["namespace {$namespace};"] : [''],
+                ["namespace {$namespace};"],
             );
         }
 
@@ -100,8 +127,32 @@ class CreateModuleCommand extends Command
             $this->replaceInFile(
                 "{$path}/src/SettingsListener.php",
                 ['#// namespace#'],
-                $namespace ? ["namespace {$namespace};"] : [''],
+                ["namespace {$namespace};"],
             );
+        }
+
+        if ($less) {
+            // add custom LESS
+            $find = [
+                '#// includes#',
+                '#// add theme config ...#',
+                '#// add styler config ...#',
+                '#// add event handlers ...#',
+            ];
+            $replace = [
+                "\${0}\ninclude_once __DIR__ . 'src/StyleListener';",
+                "\${0}\n\n        'styles' => [
+            'components' => [
+                'my-component' => Path::get('./assets/less/my-component.less'),
+            ],
+        ],",
+                "StylerConfig::class => __DIR__ . '/config/styler.json',",
+                "\${0}\n\n        StylerConfig::class => [
+            StyleListener::class => 'config'
+        ],",
+            ];
+
+            $this->replaceInFile("{$path}/bootstrap.php", $find, $replace);
         }
 
         $output->writeln('Module created successfully.');

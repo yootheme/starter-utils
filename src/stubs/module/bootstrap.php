@@ -4,12 +4,17 @@
 
 use YOOtheme\Builder;
 use YOOtheme\Path;
+use YOOtheme\Theme\Styler\StylerConfig;
 
 // includes
 
 return [
     'theme' => [
         // add theme config ...
+    ],
+
+    'config' => [
+        // add styler config ...
     ],
 
     'events' => [
