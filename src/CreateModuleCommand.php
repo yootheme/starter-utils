@@ -182,7 +182,7 @@ class CreateModuleCommand extends Command
                 "\${0}\ninclude_once __DIR__ . '/src/SourceListener';\ninclude_once __DIR__ . '/src/MyTypeProvider.php';\ninclude_once __DIR__ . '/src/Type/MyType.php';\ninclude_once __DIR__ . '/src/Type/MyQueryType.php';",
                 "\${0}\n\n        'source.init' => [
             SourceListener::class => ['initSource']
-        ]",
+        ],",
             ];
 
             $this->replaceInFile("{$path}/bootstrap.php", $find, $replace);
