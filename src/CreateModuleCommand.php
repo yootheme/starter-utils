@@ -75,7 +75,7 @@ class CreateModuleCommand extends Command
 
         if ($less) {
             $finders['less'] = (new Finder())
-                ->name(['StyleListener.php', 'my-component.less'])
+                ->name(['StyleListener.php', 'my-component.less', 'styler.json'])
                 ->in("{$this->stubs}/module");
         }
 
@@ -107,7 +107,7 @@ class CreateModuleCommand extends Command
             // add AssetsListener
             $find = ['#// includes#', '#// add event handlers ...#'];
             $replace = [
-                "\${0}\ninclude_once __DIR__ . 'src/AssetsListener';",
+                "\${0}\ninclude_once __DIR__ . '/src/AssetsListener.php';",
                 "\${0}\n\n        'theme.head' => [
             AssetsListener::class => 'initHead',
         ],",
@@ -127,7 +127,7 @@ class CreateModuleCommand extends Command
             // add SettingsListener
             $find = ['#// includes#', '#// add event handlers ...#'];
             $replace = [
-                "\${0}\ninclude_once __DIR__ . 'src/SettingsListener';",
+                "\${0}\ninclude_once __DIR__ . '/src/SettingsListener.php';",
                 "\${0}\n\n        'customizer.init' => [
             SettingsListener::class => 'initCustomizer',
         ],",
@@ -154,7 +154,7 @@ class CreateModuleCommand extends Command
             ];
             $replace = [
                 "\${0}\nuse YOOtheme\Theme\Styler\StylerConfig;",
-                "\${0}\ninclude_once __DIR__ . 'src/StyleListener';",
+                "\${0}\ninclude_once __DIR__ . '/src/StyleListener.php';",
                 "\${0}\n\n        'styles' => [
             'components' => [
                 'my-component' => Path::get('./assets/less/my-component.less'),
@@ -179,7 +179,7 @@ class CreateModuleCommand extends Command
         if ($source) {
             $find = ['#// includes#', '#// add event handlers ...#'];
             $replace = [
-                "\${0}\ninclude_once __DIR__ . '/src/SourceListener';\ninclude_once __DIR__ . '/src/MyTypeProvider.php';\ninclude_once __DIR__ . '/src/Type/MyType.php';\ninclude_once __DIR__ . '/src/Type/MyQueryType.php';",
+                "\${0}\ninclude_once __DIR__ . '/src/SourceListener.php';\ninclude_once __DIR__ . '/src/MyTypeProvider.php';\ninclude_once __DIR__ . '/src/Type/MyType.php';\ninclude_once __DIR__ . '/src/Type/MyQueryType.php';",
                 "\${0}\n\n        'source.init' => [
             SourceListener::class => ['initSource']
         ],",
