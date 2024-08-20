@@ -54,6 +54,9 @@ class CreateModuleCommand extends Command
         $settings = $ask(new ConfirmationQuestion('Add settings example? [y/N] ', false));
         $less = $ask(new ConfirmationQuestion('Add custom LESS example? [y/N] ', false));
         $source = $ask(new ConfirmationQuestion('Add custom source example? [y/N] ', false));
+        $translator = $ask(
+            new ConfirmationQuestion('Add translation files example? [y/N] ', false),
+        );
 
         $finders = [
             'module' => (new Finder())
@@ -87,6 +90,12 @@ class CreateModuleCommand extends Command
                     'MyQueryType.php',
                     'MyType.php',
                 ])
+                ->in("{$this->stubs}/module");
+        }
+
+        if ($translator) {
+            $finders['translator'] = (new Finder())
+                ->name(['TranslationListener.php', 'en_GB.json'])
                 ->in("{$this->stubs}/module");
         }
 
@@ -203,6 +212,26 @@ class CreateModuleCommand extends Command
                     ["namespace {$namespace};"],
                 );
             }
+        }
+
+        if ($translator) {
+            // add TranslationListener
+            $find = ['#// includes#', '#// add event handlers ...#'];
+            $replace = [
+                "\${0}\ninclude_once __DIR__ . '/src/TranslationListener.php';",
+                "\${0}\n\n        'customizer.init' => [
+            TranslationListener::class => ['initCustomizer', -10],
+        ],",
+            ];
+
+            $this->replaceInFile("{$path}/bootstrap.php", $find, $replace);
+
+            // namespace
+            $this->replaceInFile(
+                "{$path}/src/TranslationListener.php",
+                ['#// namespace#'],
+                ["namespace {$namespace};"],
+            );
         }
 
         $output->writeln('Module created successfully.');
