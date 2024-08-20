@@ -4,7 +4,6 @@
 
 use YOOtheme\Builder;
 use YOOtheme\Path;
-use YOOtheme\Theme\Styler\StylerConfig;
 
 // includes
 

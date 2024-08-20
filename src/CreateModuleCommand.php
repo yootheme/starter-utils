@@ -146,12 +146,14 @@ class CreateModuleCommand extends Command
         if ($less) {
             // add custom LESS
             $find = [
+                '#use YOOtheme\\\\Path;#',
                 '#// includes#',
                 '#// add theme config ...#',
                 '#// add styler config ...#',
                 '#// add event handlers ...#',
             ];
             $replace = [
+                "\${0}\nuse YOOtheme\Theme\Styler\StylerConfig;",
                 "\${0}\ninclude_once __DIR__ . 'src/StyleListener';",
                 "\${0}\n\n        'styles' => [
             'components' => [
