@@ -56,13 +56,13 @@ class CreateElementCommand extends Command
         }
 
         $finders = [
-            $name => (new Finder())->in("{$this->stubs}/element"),
+            $name => (new Finder())->in("{$this->stubs}/single-element"),
         ];
 
         if ($ask(new ConfirmationQuestion('Create multiple items element? [y/N] ', false))) {
             $finders = [
-                $name => (new Finder())->in("{$this->stubs}/multiple"),
-                "{$name}_item" => (new Finder())->in("{$this->stubs}/multiple_item"),
+                $name => (new Finder())->in("{$this->stubs}/multiple-element"),
+                "{$name}_item" => (new Finder())->in("{$this->stubs}/multiple-element_item"),
             ];
         }
 
