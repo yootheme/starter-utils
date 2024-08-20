@@ -2,6 +2,7 @@
 
 namespace YOOtheme\Starter;
 
+use Composer\Composer;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -19,6 +20,10 @@ class CreatePluginCommand extends Command
 
     protected function configure()
     {
+        if (version_compare(Composer::getVersion(), '2.5', '<')) {
+            throw new \Exception('Composer version 2.5 or higher is required');
+        }
+
         $this->addArgument('name', InputArgument::OPTIONAL, default: basename(getcwd()));
     }
 
