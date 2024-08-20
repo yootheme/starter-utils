@@ -29,9 +29,7 @@ tasks:
           src: '**'
           dest: dist/joomla
 
-      - task: copy-module
-        vars:
-          SYSTEM: joomla
+      - task: copy-module-joomla
 
       - task: placeholder-joomla
 
@@ -52,9 +50,7 @@ tasks:
           src: '*.php'
           dest: dist/wordpress
 
-      - task: copy-module
-        vars:
-          SYSTEM: wordpress
+      - task: copy-module-wordpress
 
       - task: placeholder-wordpress
 
@@ -67,13 +63,23 @@ tasks:
       - defer:
           task: clear-dist-wordpress
 
-  copy-module:
+  copy-module-joomla:
     internal: true
     cmds:
       - task: utils:copy
         vars:
           src: modules/**
-          dest: dist/{{.SYSTEM}}
+          dest: dist/joomla
+          ignore: modules/*wordpress*/**
+
+  copy-module-wordpress:
+    internal: true
+    cmds:
+      - task: utils:copy
+        vars:
+          src: modules/**
+          dest: dist/wordpress
+          ignore: modules/*joomla*/**
 
   placeholder-joomla:
     internal: true
