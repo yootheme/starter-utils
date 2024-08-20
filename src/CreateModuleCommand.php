@@ -53,6 +53,7 @@ class CreateModuleCommand extends Command
         $assets = $ask(new ConfirmationQuestion('Add assets files example? [y/N] ', false));
         $settings = $ask(new ConfirmationQuestion('Add settings example? [y/N] ', false));
         $less = $ask(new ConfirmationQuestion('Add custom LESS example? [y/N] ', false));
+        $source = $ask(new ConfirmationQuestion('Add custom source example? [y/N] ', false));
 
         $finders = [
             'module' => (new Finder())
@@ -75,6 +76,17 @@ class CreateModuleCommand extends Command
         if ($less) {
             $finders['less'] = (new Finder())
                 ->name(['StyleListener.php', 'my-component.less'])
+                ->in("{$this->stubs}/module");
+        }
+
+        if ($source) {
+            $finders['source'] = (new Finder())
+                ->name([
+                    'SourceListener.php',
+                    'MyTypeProvider.php',
+                    'MyQueryType.php',
+                    'MyType.php',
+                ])
                 ->in("{$this->stubs}/module");
         }
 
@@ -160,6 +172,35 @@ class CreateModuleCommand extends Command
                 ['#// namespace#'],
                 ["namespace {$namespace};"],
             );
+        }
+
+        if ($source) {
+            $find = ['#// includes#', '#// add event handlers ...#'];
+            $replace = [
+                "\${0}\ninclude_once __DIR__ . '/src/SourceListener';\ninclude_once __DIR__ . '/src/MyTypeProvider.php';\ninclude_once __DIR__ . '/src/Type/MyType.php';\ninclude_once __DIR__ . '/src/Type/MyQueryType.php';",
+                "\${0}\n\n        'source.init' => [
+            SourceListener::class => ['initSource']
+        ]",
+            ];
+
+            $this->replaceInFile("{$path}/bootstrap.php", $find, $replace);
+
+            // namespace
+            foreach (
+                [
+                    'SourceListener.php',
+                    'MyTypeProvider.php',
+                    'Type/MyType.php',
+                    'Type/MyQueryType.php',
+                ]
+                as $file
+            ) {
+                $this->replaceInFile(
+                    "{$path}/src/{$file}",
+                    ['#// namespace#'],
+                    ["namespace {$namespace};"],
+                );
+            }
         }
 
         $output->writeln('Module created successfully.');
