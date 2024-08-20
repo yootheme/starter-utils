@@ -27,7 +27,7 @@ class CreatePluginCommand extends Command
         $fs = new Filesystem();
         $cwd = getcwd();
 
-        $name = $input->getArgument('name');
+        $name = strtr($input->getArgument('name'), ['-' => '_', ' ' => '_']);
 
         $fn = [$this->getHelper('question'), 'ask'];
         $ask = $this->partial($fn, $input, $output);
