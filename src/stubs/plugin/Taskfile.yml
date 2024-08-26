@@ -3,17 +3,7 @@ version: '3'
 includes:
   utils: vendor/yootheme/starter-utils
 
-vars:
-  TITLE: '{{ TITLE }}'
-  NAME: '{{ NAME }}'
-  VERSION: '0.0.1'
-  DESCRIPTION: '{{ DESCRIPTION }}'
-  DATE: '{{ now | date "2006-01-02" }}'
-  COPYRIGHT: 'Copyright (C)'
-  LICENSE: 'GNU General Public License'
-  AUTHOR: '{{ AUTHOR }}'
-  AUTHOREMAIL: '{{ AUTHOREMAIL }}'
-  AUTHORURL: '{{ AUTHORURL }}'
+dotenv: ['.env']
 
 tasks:
   build:
@@ -27,6 +17,7 @@ tasks:
         vars:
           cwd: build/joomla
           src: '**'
+          ignore: update.xml
           dest: dist/joomla
 
       - task: copy-module-joomla
@@ -139,6 +130,7 @@ tasks:
         vars:
           cwd: build/joomla
           src: '**'
+          ignore: update.xml
           dest: dist/joomla
 
       - task: placeholder-joomla
@@ -149,8 +141,8 @@ tasks:
           src: '**'
           dest: ./
 
-      - defer:
-          task: clear-dist-joomla
+      # - defer:
+      #     task: clear-dist-joomla
 
   setup-wordpress:
     cmds:

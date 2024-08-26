@@ -39,6 +39,7 @@ class CreatePluginCommand extends Command
         $finder = (new Finder())->in("{$this->stubs}/plugin");
 
         $filemap = [
+            '/env' => '/.env',
             '/plugin.xml' => "/{$name}.xml",
             '/plugin.stub' => "/{$name}.php",
         ];
@@ -62,7 +63,9 @@ class CreatePluginCommand extends Command
                 strtr("{$cwd}/{$file->getRelativePathname()}", $filemap),
                 Str::placeholder(
                     $file->getContents(),
-                    $file->getBasename() === 'Taskfile.yml' ? $questions : $variables,
+                    in_array($file->getBasename(), ['Taskfile.yml', 'env'])
+                        ? $questions
+                        : $variables,
                 ),
             );
         }

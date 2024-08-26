@@ -13,4 +13,9 @@
         <filename plugin="{{PLUGIN}}">{{PLUGIN}}.php</filename>
         <folder>modules</folder>
     </files>
+    <updateservers>
+		<server type="extension" priority="1" name="{{PLUGIN}}">
+			https://raw.githubusercontent.com/{{OWNER}}/{{REPO}}/main/update.xml
+		</server>
+	</updateservers>
 </extension>
