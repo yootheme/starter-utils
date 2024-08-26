@@ -45,6 +45,10 @@ class CreateModuleCommand extends Command
                 throw new \Exception('The namespace cannot be empty');
             }
 
+            if (str_contains($value, '/')) {
+                throw new \Exception('The namespace is invalid');
+            }
+
             return $value;
         });
         $namespace->setMaxAttempts(10);
