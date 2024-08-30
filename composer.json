@@ -13,8 +13,7 @@
         "source": "https://github.com/yootheme/starter-utils"
     },
     "require": {
-        "php": "^8.0",
-        "symfony/dotenv": "^7.1"
+        "php": "^8.0"
     },
     "require-dev": {
         "composer/composer": "^2.7",
