@@ -1,3 +1,12 @@
+## [1.0.2](https://github.com/yootheme/starter-utils/compare/1.0.1...1.0.2) (2024-08-30)
+
+
+### Features
+
+* add create update xml command ([fc013f7](https://github.com/yootheme/starter-utils/commit/fc013f77241f144755ef46d40c0bf61ab1fea2df))
+
+
+
 # [1.0.0](https://github.com/yootheme/starter-utils/compare/497aa24b246fb9f0f867768094e8945dd55590e8...1.0.0) (2024-08-20)
 
 ### Bug Fixes
