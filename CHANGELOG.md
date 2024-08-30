@@ -1,3 +1,12 @@
+## [1.0.3](https://github.com/yootheme/starter-utils/compare/1.0.2...1.0.3) (2024-08-30)
+
+
+### Bug Fixes
+
+* generating file hashes ([3b17e76](https://github.com/yootheme/starter-utils/commit/3b17e764910fdbf5a02c12ba39115f86f5b8e084))
+
+
+
 ## [1.0.2](https://github.com/yootheme/starter-utils/compare/1.0.1...1.0.2) (2024-08-30)
 
 
