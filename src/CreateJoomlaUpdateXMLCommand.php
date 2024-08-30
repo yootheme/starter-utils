@@ -39,7 +39,9 @@ class CreateJoomlaUpdateXMLCommand extends Command
         $metadata = parse_ini_file(getcwd() . '/.env');
 
         $metadata['TYPE'] = 'plugin';
-        $metadata['SHA256'] = hash('sha256', $file);
+        $metadata['SHA256'] = hash_file('sha256', $file);
+        $metadata['SHA384'] = hash_file('sha384', $file);
+        $metadata['SHA512'] = hash_file('sha512', $file);
 
         return $metadata;
     }
@@ -51,28 +53,30 @@ class CreateJoomlaUpdateXMLCommand extends Command
         $xmlUpdate = $xml->addChild('update');
 
         $keys = [
-            'name',
-            'description',
-            'element',
-            'type',
-            'version',
-            'downloadurl',
-            'stability',
-            'sha256',
-            'maintainer',
-            'maintainerurl',
-            'requires',
-            'php_minimum',
+            'NAME',
+            'DESCRIPTION',
+            'ELEMENT',
+            'TYPE',
+            'VERSION',
+            'DOWNLOADURL',
+            'STABILITY',
+            'SHA256',
+            'SHA384',
+            'SHA512',
+            'MAINTAINER',
+            'MAINTAINERURL',
+            'TARGETPLATFORM',
+            'PHP_MINIMUM',
         ];
 
         foreach ($keys as $key) {
-            if (!is_null($value = $metadata[strtoupper($key)] ?? null)) {
+            if (!is_null($value = $metadata[$key] ?? null)) {
                 $xmlUpdate->addChild($key, $value);
             }
 
-            if ('element' == $key) {
+            if ('ELEMENT' == $key) {
                 $xmlUpdate->addChild('element', $metadata['NAME']);
-            } elseif ('downloadurl' == $key) {
+            } elseif ('DOWNLOADURL' == $key) {
                 $downloads = $xmlUpdate->addChild('downloads');
                 $download = $downloads->addChild(
                     'downloadurl',
@@ -82,10 +86,10 @@ class CreateJoomlaUpdateXMLCommand extends Command
                 );
                 $download->addAttribute('type', 'full');
                 $download->addAttribute('format', 'zip');
-            } elseif ('maintainer' == $key) {
+            } elseif ('MAINTAINER' == $key) {
                 $xmlUpdate->addChild('maintainer', $metadata['AUTHOR']);
                 $xmlUpdate->addChild('maintainerurl', $metadata['AUTHORURL']);
-            } elseif ('requires' == $key) {
+            } elseif ('TARGETPLATFORM' == $key) {
                 $xmlChild = $xmlUpdate->addChild('targetplatform');
                 $xmlChild->addAttribute('name', 'joomla');
                 $xmlChild->addAttribute('version', $metadata['TARGETPLATFORM']);
