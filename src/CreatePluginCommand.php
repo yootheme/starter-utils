@@ -36,7 +36,9 @@ class CreatePluginCommand extends Command
 
         $fn = [$this->getHelper('question'), 'ask'];
         $ask = $this->partial($fn, $input, $output);
-        $finder = (new Finder())->in("{$this->stubs}/plugin");
+        $finder = (new Finder())
+            ->in("{$this->stubs}/plugin")
+            ->ignoreDotFiles(false);
 
         $filemap = [
             '/env' => '/.env',
@@ -63,7 +65,7 @@ class CreatePluginCommand extends Command
                 strtr("{$cwd}/{$file->getRelativePathname()}", $filemap),
                 Str::placeholder(
                     $file->getContents(),
-                    in_array($file->getBasename(), ['Taskfile.yml', 'env'])
+                    in_array($file->getBasename(), ['Taskfile.yml', '.env'])
                         ? $questions
                         : $variables,
                 ),
