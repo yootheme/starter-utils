@@ -51,10 +51,10 @@ class CreatePluginCommand extends Command
         ];
 
         $questions = $variables + [
-            'DESCRIPTION' => $ask(new Question('Enter plugin description: ')),
-            'AUTHOR' => $ask(new Question('Enter author name: ')),
-            'AUTHOREMAIL' => $ask(new Question('Enter author email: ')),
-            'AUTHORURL' => $ask(new Question('Enter author url: ')),
+            'DESCRIPTION' => $ask(new Question('Enter plugin description: ', '')),
+            'AUTHOR' => $ask(new Question('Enter author name: ', '')),
+            'AUTHOREMAIL' => $ask(new Question('Enter author email: ', '')),
+            'AUTHORURL' => $ask(new Question('Enter author url: ', '')),
         ];
 
         foreach ($finder->files() as $file) {
