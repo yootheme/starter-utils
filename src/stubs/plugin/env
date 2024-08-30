@@ -1,0 +1,16 @@
+TITLE='{{TITLE}}'
+NAME='{{NAME}}'
+VERSION='0.0.1'
+DESCRIPTION='{{DESCRIPTION}}'
+DATE='{{now | date "2006-01-02"}}'
+COPYRIGHT='Copyright (C)'
+LICENSE='GNU General Public License'
+AUTHOR='{{AUTHOR}}'
+AUTHOREMAIL='{{AUTHOREMAIL}}'
+AUTHORURL='{{AUTHORURL}}'
+
+# Joomla Package information
+STABILITY='stable'
+DOWNLOADURL=https://www.github.com/example
+PHPMINIMUM='7.4'
+TARGETPLATFORM='(5\.[01]|4\.[01234]|3\.10)\.'
