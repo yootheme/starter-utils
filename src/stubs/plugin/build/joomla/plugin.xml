@@ -14,8 +14,8 @@
         <folder>modules</folder>
     </files>
     <updateservers>
-		<server type="extension" priority="1" name="{{PLUGIN}}">
-			https://raw.githubusercontent.com/{{OWNER}}/{{REPO}}/main/update.xml
-		</server>
-	</updateservers>
+        <server type="extension" priority="1" name="{{PLUGIN}}">
+            {{UPDATEURI}}/update.xml
+        </server>
+    </updateservers>
 </extension>

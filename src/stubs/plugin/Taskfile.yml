@@ -30,6 +30,8 @@ tasks:
           src: '**'
           dest: dist/{{.NAME}}-j-{{.VERSION}}.zip
 
+      - task: joomlaUpdate
+
       - defer:
           task: clear-dist-joomla
 
@@ -39,7 +41,7 @@ tasks:
         vars:
           cwd: build/wordpress
           src: '*.php'
-          dest: dist/wordpress
+          dest: dist/wordpress/{{.NAME}}
 
       - task: copy-module-wordpress
 
@@ -50,6 +52,8 @@ tasks:
           cwd: dist/wordpress
           src: '**'
           dest: dist/{{.NAME}}-wp-{{.VERSION}}.zip
+
+      - task: wordpressUpdate
 
       - defer:
           task: clear-dist-wordpress
@@ -90,13 +94,14 @@ tasks:
               "LICENSE" "{{.LICENSE}}"
               "NAME" "{{.NAME}}"
               "VERSION" "{{.VERSION}}"
+              "UPDATEURI" "{{.UPDATEURI}}"
 
   placeholder-wordpress:
     internal: true
     cmds:
       - task: utils:placeholder
         vars:
-          src: dist/wordpress/{{.NAME}}.php
+          src: dist/wordpress/{{.NAME}}/{{.NAME}}.php
           replace:
             ref: >
               dict
@@ -109,6 +114,18 @@ tasks:
               "LICENSE" "{{.LICENSE}}"
               "NAME" "{{.NAME}}"
               "VERSION" "{{.VERSION}}"
+              "PHPMINIMUM" "{{.PHPMINIMUM}}"
+              "WORDPRESSMINIMUM" "{{.WORDPRESSMINIMUM}}"
+              "UPDATEURI" "{{.UPDATEURI}}"
+              "UPDATEHOST" "{{.UPDATEHOST}}"
+
+  joomlaUpdate:
+    cmds:
+      - composer create:joomlaUpdate
+
+  wordpressUpdate:
+    cmds:
+      - composer create:wordpressUpdate
 
   clear-dist-joomla:
     internal: true
@@ -141,8 +158,8 @@ tasks:
           src: '**'
           dest: ./
 
-      # - defer:
-      #     task: clear-dist-joomla
+      - defer:
+          task: clear-dist-joomla
 
   setup-wordpress:
     cmds:

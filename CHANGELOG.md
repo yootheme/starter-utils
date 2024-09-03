@@ -1,3 +1,18 @@
+## [1.0.4](https://github.com/yootheme/starter-utils/compare/1.0.3...1.0.4) (2024-09-03)
+
+
+### Bug Fixes
+
+* lowercase node names and duplicates in update.xml ([508f4e6](https://github.com/yootheme/starter-utils/commit/508f4e6705805da068c7031429e8cc33b0a341f8))
+
+
+### Features
+
+* add wordpress update command ([8d23351](https://github.com/yootheme/starter-utils/commit/8d2335124a54df97d0ec90e94d72f8f737d5de5f))
+* build task creates plugin update files ([b1014a5](https://github.com/yootheme/starter-utils/commit/b1014a5681cf0f624f5dda0fc4e5e5a179749228))
+
+
+
 ## [1.0.3](https://github.com/yootheme/starter-utils/compare/1.0.2...1.0.3) (2024-08-30)
 
 
