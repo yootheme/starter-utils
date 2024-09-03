@@ -9,21 +9,21 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Filesystem\Filesystem;
 
-#[AsCommand(name: 'create:updateXML', description: 'Create the Joomla update server XML')]
-class CreateJoomlaUpdateXMLCommand extends Command
+#[AsCommand(name: 'create:joomlaUpdate', description: 'Create the Joomla update server XML')]
+class CreateJoomlaUpdateCommand extends Command
 {
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $zip = new \ZipArchive();
-        $file = glob(Path::join(getcwd(), 'dist', '*-j-*.zip'));
+        $files = glob(Path::join(getcwd(), 'dist', '*-j-*.zip'));
 
-        if (empty($file) || !$zip->open($file[0])) {
+        if (empty($files)) {
             $output->writeln('<error>Could not find Joomla package in dist folder.</error>');
 
             return Command::FAILURE;
         }
 
-        $metadata = $this->getMetadata($file[0]);
+        $metadata = $this->getMetadata($files);
 
         $xml = dom_import_simplexml($this->toXML($metadata))->ownerDocument;
         $xml->formatOutput = true;
@@ -34,11 +34,16 @@ class CreateJoomlaUpdateXMLCommand extends Command
         return Command::SUCCESS;
     }
 
-    protected function getMetadata($file)
+    protected function getMetadata($files)
     {
         $metadata = parse_ini_file(getcwd() . '/.env');
 
-        $metadata['TYPE'] = 'plugin';
+        $file = array_values(
+            array_filter($files, function ($file) use ($metadata) {
+                return preg_match("/-j-{$metadata['VERSION']}/", $file);
+            }),
+        )[0];
+
         $metadata['SHA256'] = hash_file('sha256', $file);
         $metadata['SHA384'] = hash_file('sha384', $file);
         $metadata['SHA512'] = hash_file('sha512', $file);
@@ -65,15 +70,11 @@ class CreateJoomlaUpdateXMLCommand extends Command
             'SHA512',
             'MAINTAINER',
             'MAINTAINERURL',
-            'TARGETPLATFORM',
+            'JOOMLAMINIMUM',
             'PHP_MINIMUM',
         ];
 
         foreach ($keys as $key) {
-            if (!is_null($value = $metadata[$key] ?? null)) {
-                $xmlUpdate->addChild($key, $value);
-            }
-
             if ('ELEMENT' == $key) {
                 $xmlUpdate->addChild('element', $metadata['NAME']);
             } elseif ('DOWNLOADURL' == $key) {
@@ -89,10 +90,12 @@ class CreateJoomlaUpdateXMLCommand extends Command
             } elseif ('MAINTAINER' == $key) {
                 $xmlUpdate->addChild('maintainer', $metadata['AUTHOR']);
                 $xmlUpdate->addChild('maintainerurl', $metadata['AUTHORURL']);
-            } elseif ('TARGETPLATFORM' == $key) {
+            } elseif ('JOOMLAMINIMUM' == $key) {
                 $xmlChild = $xmlUpdate->addChild('targetplatform');
                 $xmlChild->addAttribute('name', 'joomla');
-                $xmlChild->addAttribute('version', $metadata['TARGETPLATFORM']);
+                $xmlChild->addAttribute('version', $metadata['JOOMLAMINIMUM']);
+            } elseif (!is_null($value = $metadata[$key] ?? null)) {
+                $xmlUpdate->addChild(strtolower($key), $value);
             }
         }
 

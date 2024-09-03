@@ -58,6 +58,7 @@ class CreatePluginCommand extends Command
             'AUTHOR' => $ask(new Question('Enter author name: ', '')),
             'AUTHOREMAIL' => $ask(new Question('Enter author email: ', '')),
             'AUTHORURL' => $ask(new Question('Enter author url: ', '')),
+            'UPDATEURI' => $ask(new Question('Enter update server url: ', '')),
         ];
 
         foreach ($finder->files() as $file) {

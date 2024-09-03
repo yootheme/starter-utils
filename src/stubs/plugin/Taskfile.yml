@@ -90,6 +90,7 @@ tasks:
               "LICENSE" "{{.LICENSE}}"
               "NAME" "{{.NAME}}"
               "VERSION" "{{.VERSION}}"
+              "UPDATEURI" "{{.UPDATEURI}}"
 
   placeholder-wordpress:
     internal: true
@@ -141,8 +142,8 @@ tasks:
           src: '**'
           dest: ./
 
-      # - defer:
-      #     task: clear-dist-joomla
+      - defer:
+          task: clear-dist-joomla
 
   setup-wordpress:
     cmds:
