@@ -61,6 +61,8 @@ class CreatePluginCommand extends Command
             'UPDATEURI' => $ask(new Question('Enter update server url: ', '')),
         ];
 
+        $variables['UPDATEHOST'] = parse_url($questions['UPDATEURI'], PHP_URL_HOST);
+
         foreach ($finder->files() as $file) {
             $fs->dumpFile(
                 strtr("{$cwd}/{$file->getRelativePathname()}", $filemap),

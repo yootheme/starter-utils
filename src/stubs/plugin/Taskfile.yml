@@ -110,6 +110,10 @@ tasks:
               "LICENSE" "{{.LICENSE}}"
               "NAME" "{{.NAME}}"
               "VERSION" "{{.VERSION}}"
+              "PHPMINIMUM" "{{.PHPMINIMUM}}"
+              "WORDPRESSMINIMUM" "{{.WORDPRESSMINIMUM}}"
+              "UPDATEURI" "{{.UPDATEURI}}"
+              "UPDATEHOST" "{{.UPDATEHOST}}"
 
   clear-dist-joomla:
     internal: true
