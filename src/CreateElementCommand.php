@@ -69,6 +69,7 @@ class CreateElementCommand extends Command
         $variables = [
             'NAME' => $name,
             'TITLE' => $ask(new Question('Enter element title: ', $name)),
+            'GROUP' => $ask(new Question('Enter element group: ', 'Custom')),
         ];
 
         foreach ($finders as $name => $finder) {
