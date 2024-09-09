@@ -99,7 +99,7 @@ class CreateModuleCommand extends Command
 
         if ($translator) {
             $finders['translator'] = (new Finder())
-                ->name(['TranslationListener.php', 'en_GB.json'])
+                ->name(['TranslationListener.php', 'de_DE.json'])
                 ->in("{$this->stubs}/module");
         }
 
