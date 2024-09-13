@@ -1,6 +1,7 @@
 {
-    "name": "{{ NAME }}",
-    "title": "{{ TITLE }}",
+    "name": "{{NAME}}",
+    "title": "{{TITLE}}",
+    "group": "{{GROUP}}",
     "icon": "${url:images/icon.svg}",
     "iconSmall": "${url:images/iconSmall.svg}",
     "element": true,

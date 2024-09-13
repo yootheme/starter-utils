@@ -41,7 +41,6 @@ class CreatePluginCommand extends Command
             ->ignoreDotFiles(false);
 
         $filemap = [
-            '/env' => '/.env',
             '/plugin.xml' => "/{$name}.xml",
             '/plugin.stub' => "/{$name}.php",
         ];
