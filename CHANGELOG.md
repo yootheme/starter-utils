@@ -1,3 +1,13 @@
+## [1.0.6](https://github.com/yootheme/starter-utils/compare/1.0.5...1.0.6) (2024-09-18)
+
+
+### Bug Fixes
+
+* required keys for the joomla update server ([4159ffb](https://github.com/yootheme/starter-utils/commit/4159ffb3ccf26a203480c9b2fe505d3323c43e30))
+* wrong path in setup-wordpress task ([a557a42](https://github.com/yootheme/starter-utils/commit/a557a42642dd7d0b3607f7d866c2ac7a8db8c941))
+
+
+
 ## [1.0.5](https://github.com/yootheme/starter-utils/compare/1.0.4...1.0.5) (2024-09-13)
 
 
