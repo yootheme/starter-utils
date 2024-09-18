@@ -96,6 +96,8 @@ class CreateJoomlaUpdateCommand extends Command
                 $xmlChild = $xmlUpdate->addChild('targetplatform');
                 $xmlChild->addAttribute('name', 'joomla');
                 $xmlChild->addAttribute('version', $metadata['JOOMLAMINIMUM']);
+            } elseif ('STABILITY' == $key) {
+                $xmlUpdate->addChild('tags')->addChild('tag', $metadata['STABILITY']);
             } elseif (!is_null($value = $metadata[$key] ?? null)) {
                 $xmlUpdate->addChild(strtolower($key), $value);
             }
