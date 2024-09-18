@@ -167,13 +167,13 @@ tasks:
         vars:
           cwd: build/wordpress
           src: '*.php'
-          dest: dist/wordpress
+          dest: dist/wordpress/{{.NAME}}
 
       - task: placeholder-wordpress
 
       - task: utils:copy
         vars:
-          cwd: dist/wordpress
+          cwd: dist/wordpress/{{.NAME}}
           src: '**'
           dest: ./
 
