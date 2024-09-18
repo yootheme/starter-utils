@@ -62,6 +62,8 @@ class CreateJoomlaUpdateCommand extends Command
             'DESCRIPTION',
             'ELEMENT',
             'TYPE',
+            'CLIENT',
+            'FOLDER',
             'VERSION',
             'DOWNLOADURL',
             'STABILITY',
