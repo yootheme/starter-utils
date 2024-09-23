@@ -2,6 +2,12 @@
 
 // namespace
 
+/**
+ * Element transform and update functions.
+ *
+ * @see https://yootheme.com/support/yootheme-pro/joomla/developers-elements#transforms-and-updates
+ */
+
 return [
     // Define transforms for the element node
     'transforms' => [

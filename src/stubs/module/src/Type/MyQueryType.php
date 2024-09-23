@@ -2,6 +2,11 @@
 
 // namespace
 
+/**
+ * Custom Query Type
+ *
+ * @see https://yootheme.com/support/yootheme-pro/joomla/developers-sources#add-custom-sources
+ */
 class MyQueryType
 {
     public static function config()

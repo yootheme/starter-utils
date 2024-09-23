@@ -5,6 +5,11 @@
 use YOOtheme\Metadata;
 use YOOtheme\Path;
 
+/**
+ * Assets listener.
+ *
+ * @see https://yootheme.com/support/yootheme-pro/joomla/developers-modules#add-asset-files
+ */
 class AssetsListener
 {
     public static function initHead(Metadata $metadata)
