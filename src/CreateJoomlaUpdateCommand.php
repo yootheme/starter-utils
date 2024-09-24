@@ -79,6 +79,12 @@ class CreateJoomlaUpdateCommand extends Command
         foreach ($keys as $key) {
             if ('ELEMENT' == $key) {
                 $xmlUpdate->addChild('element', $metadata['NAME']);
+            } elseif ('TYPE' == $key) {
+                $xmlUpdate->addChild('type', 'plugin');
+            } elseif ('CLIENT' == $key) {
+                $xmlUpdate->addChild('client', 'site');
+            } elseif ('FOLDER' == $key) {
+                $xmlUpdate->addChild('folder', 'system');
             } elseif ('DOWNLOADURL' == $key) {
                 $downloads = $xmlUpdate->addChild('downloads');
                 $download = $downloads->addChild(
