@@ -38,7 +38,7 @@ class CreateModuleCommand extends Command
         $fn = [$this->getHelper('question'), 'ask'];
         $ask = $this->partial($fn, $input, $output);
 
-        $namespace = new Question('Enter module namespace: ');
+        $namespace = new Question('Enter PHP namespace for the module: ');
         $namespace->setNormalizer(fn($value) => $value ?? '');
         $namespace->setValidator(function ($value) {
             if ('' === trim($value)) {

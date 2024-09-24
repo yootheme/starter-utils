@@ -23,6 +23,9 @@ return [
             $params['parent']; // Parent element (stdClass)
             $params['builder']; // Builder instance (YOOtheme\Builder)
             $params['type']; // Element definition (YOOtheme\Builder\ElementType)
+
+            // Don't render element if content fields are empty
+            return $node->props['title'] || $node->props['content'];
         },
     ],
     // Define updates for the element node
