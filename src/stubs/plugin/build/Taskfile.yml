@@ -1,0 +1,179 @@
+# build tasks for the plugin
+# Do not touch this file, it will be updated automatically.
+
+version: '3'
+
+tasks:
+  build:
+    deps:
+      - for: [joomla, wordpress]
+        task: build-{{.ITEM}}
+
+  build-joomla:
+    cmds:
+      - task: utils:copy
+        vars:
+          cwd: build/joomla
+          src: '**'
+          ignore: update.xml
+          dest: dist/joomla
+
+      - task: copy-module-joomla
+
+      - task: placeholder-joomla
+
+      - task: utils:zip
+        vars:
+          cwd: dist/joomla
+          src: '**'
+          dest: dist/{{.NAME}}-j-{{.VERSION}}.zip
+
+      - task: joomlaUpdate
+
+      - defer:
+          task: clear-dist-joomla
+
+  build-wordpress:
+    cmds:
+      - task: utils:copy
+        vars:
+          cwd: build/wordpress
+          src: '*.php'
+          dest: dist/wordpress/{{.NAME}}
+
+      - task: copy-module-wordpress
+
+      - task: placeholder-wordpress
+
+      - task: utils:zip
+        vars:
+          cwd: dist/wordpress
+          src: '**'
+          dest: dist/{{.NAME}}-wp-{{.VERSION}}.zip
+
+      - task: wordpressUpdate
+
+      - defer:
+          task: clear-dist-wordpress
+
+  copy-module-joomla:
+    internal: true
+    cmds:
+      - task: utils:copy
+        vars:
+          src: modules/**
+          dest: dist/joomla
+          ignore: modules/*wordpress*/**
+
+  copy-module-wordpress:
+    internal: true
+    cmds:
+      - task: utils:copy
+        vars:
+          src: modules/**
+          dest: dist/wordpress
+          ignore: modules/*joomla*/**
+
+  placeholder-joomla:
+    internal: true
+    cmds:
+      - task: utils:placeholder
+        vars:
+          src: 'dist/joomla/**/*.xml'
+          replace:
+            ref: >
+              dict
+              "AUTHOR" "{{.AUTHOR}}"
+              "AUTHOREMAIL" "{{.AUTHOREMAIL}}"
+              "AUTHORURL" "{{.AUTHORURL}}"
+              "COPYRIGHT" "{{.COPYRIGHT}}"
+              "DATE" "{{.DATE}}"
+              "DESCRIPTION" "{{.DESCRIPTION}}"
+              "LICENSE" "{{.LICENSE}}"
+              "NAME" "{{.NAME}}"
+              "VERSION" "{{.VERSION}}"
+              "UPDATEURI" "{{.UPDATEURI}}"
+
+  placeholder-wordpress:
+    internal: true
+    cmds:
+      - task: utils:placeholder
+        vars:
+          src: dist/wordpress/{{.NAME}}/{{.NAME}}.php
+          replace:
+            ref: >
+              dict
+              "AUTHOR" "{{.AUTHOR}}"
+              "AUTHOREMAIL" "{{.AUTHOREMAIL}}"
+              "AUTHORURL" "{{.AUTHORURL}}"
+              "COPYRIGHT" "{{.COPYRIGHT}}"
+              "DATE" "{{.DATE}}"
+              "DESCRIPTION" "{{.DESCRIPTION}}"
+              "LICENSE" "{{.LICENSE}}"
+              "NAME" "{{.NAME}}"
+              "VERSION" "{{.VERSION}}"
+              "PHPMINIMUM" "{{.PHPMINIMUM}}"
+              "WORDPRESSMINIMUM" "{{.WORDPRESSMINIMUM}}"
+              "UPDATEURI" "{{.UPDATEURI}}"
+              "UPDATEHOST" "{{.UPDATEHOST}}"
+
+  joomlaUpdate:
+    cmds:
+      - composer create:joomlaUpdate
+
+  wordpressUpdate:
+    cmds:
+      - composer create:wordpressUpdate
+
+  clear-dist-joomla:
+    internal: true
+    cmds:
+      - task: utils:remove
+        vars:
+          src: dist/joomla
+
+  clear-dist-wordpress:
+    internal: true
+    cmds:
+      - task: utils:remove
+        vars:
+          src: dist/wordpress
+
+  setup-joomla:
+    cmds:
+      - task: utils:copy
+        vars:
+          cwd: build/joomla
+          src: '**'
+          ignore: update.xml
+          dest: dist/joomla
+
+      - task: placeholder-joomla
+
+      - task: utils:copy
+        vars:
+          cwd: dist/joomla
+          src: '**'
+          dest: ./
+
+      - defer:
+          task: clear-dist-joomla
+
+  setup-wordpress:
+    cmds:
+      - task: utils:copy
+        vars:
+          cwd: build/wordpress
+          src: '*.php'
+          dest: dist/wordpress/{{.NAME}}
+
+      - task: placeholder-wordpress
+
+      - task: utils:copy
+        vars:
+          cwd: dist/wordpress/{{.NAME}}
+          src: '**'
+          dest: ./
+
+      - defer:
+          task: clear-dist-wordpress

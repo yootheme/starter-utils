@@ -106,6 +106,28 @@ class TaskHelper
         call_user_func_array([new self($_SERVER), $task], $args);
     }
 
+    public static function postUpdate(Event $event): void
+    {
+        $composer = $event->getComposer();
+        $vendor = $composer->getConfig()->get('vendor-dir');
+        $installed = $composer->getRepositoryManager()->getLocalRepository();
+
+        foreach ($installed->getPackages() as $package) {
+            $name = $package->getName();
+
+            if ($name === 'yootheme/starter-utils') {
+                $path = $vendor . '/' . $name;
+                $finder = self::glob($path . '/src/stubs/plugin/build', 'Taskfile.yml');
+            }
+        }
+
+        $fs = new Filesystem();
+
+        foreach ($finder->files() as $file) {
+            $fs->dumpFile('build/' . $file->getRelativePathname(), $file->getContents());
+        }
+    }
+
     protected static function glob(string $path, string $src, string $ignore = ''): Finder
     {
         $finder = Finder::create()->in(self::resolvePath($path));
