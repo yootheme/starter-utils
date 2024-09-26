@@ -25,7 +25,9 @@ return [
             $params['type']; // Element definition (YOOtheme\Builder\ElementType)
 
             // Don't render element if content fields are empty
-            return $node->props['title'] || $node->props['content'];
+            return $node->props['title'] != '' ||
+                $node->props['content'] != '' ||
+                $node->props['image'];
         },
     ],
     // Define updates for the element node
