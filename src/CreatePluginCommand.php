@@ -74,9 +74,21 @@ class CreatePluginCommand extends Command
             );
         }
 
+        // .gitignore
+        $this->replaceInFile(
+            "{$cwd}/.gitignore",
+            ['/# pluginfiles/'],
+            ["{$name}.php\n{$name}.xml"],
+        );
+
         $output->writeln("Plugin '{$name}' created successfully.");
 
         return Command::SUCCESS;
+    }
+
+    protected function replaceInFile(string $file, array $find, array $replace)
+    {
+        file_put_contents($file, preg_replace($find, $replace, file_get_contents($file)));
     }
 
     protected function partial(callable $func, ...$args): callable
