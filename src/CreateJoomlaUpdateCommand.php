@@ -79,6 +79,12 @@ class CreateJoomlaUpdateCommand extends Command
         foreach ($keys as $key) {
             if ('ELEMENT' == $key) {
                 $xmlUpdate->addChild('element', $metadata['NAME']);
+            } elseif ('TYPE' == $key) {
+                $xmlUpdate->addChild('type', 'plugin');
+            } elseif ('CLIENT' == $key) {
+                $xmlUpdate->addChild('client', 'site');
+            } elseif ('FOLDER' == $key) {
+                $xmlUpdate->addChild('folder', 'system');
             } elseif ('DOWNLOADURL' == $key) {
                 $downloads = $xmlUpdate->addChild('downloads');
                 $download = $downloads->addChild(
@@ -96,6 +102,8 @@ class CreateJoomlaUpdateCommand extends Command
                 $xmlChild = $xmlUpdate->addChild('targetplatform');
                 $xmlChild->addAttribute('name', 'joomla');
                 $xmlChild->addAttribute('version', $metadata['JOOMLAMINIMUM']);
+            } elseif ('STABILITY' == $key) {
+                $xmlUpdate->addChild('tags')->addChild('tag', $metadata['STABILITY']);
             } elseif (!is_null($value = $metadata[$key] ?? null)) {
                 $xmlUpdate->addChild(strtolower($key), $value);
             }

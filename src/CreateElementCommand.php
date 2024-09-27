@@ -66,6 +66,14 @@ class CreateElementCommand extends Command
             ];
         }
 
+        if (
+            $transform = $ask(
+                new ConfirmationQuestion('Include Element transform example? [y/N] ', false),
+            )
+        ) {
+            $finders[$name]->in("{$this->stubs}/element-transform");
+        }
+
         $variables = [
             'NAME' => $name,
             'TITLE' => $ask(new Question('Enter element title: ', $name)),
@@ -80,9 +88,21 @@ class CreateElementCommand extends Command
             }
 
             foreach ($finder->files() as $file) {
+                $content = null;
+
+                if ($transform && $file->getBasename() === 'element.json') {
+                    $content = json_encode(
+                        [
+                            ...['@import' => './element.php'],
+                            ...json_decode($file->getContents(), true),
+                        ],
+                        JSON_PRETTY_PRINT,
+                    );
+                }
+
                 $fs->dumpFile(
                     "{$path}/{$file->getRelativePathname()}",
-                    Str::placeholder($file->getContents(), $variables),
+                    Str::placeholder($content ?? $file->getContents(), $variables),
                 );
             }
         }

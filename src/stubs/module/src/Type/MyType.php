@@ -2,6 +2,11 @@
 
 // namespace
 
+/**
+ * Custom Type
+ *
+ * @see https://yootheme.com/support/yootheme-pro/joomla/developers-sources#add-custom-sources
+ */
 class MyType
 {
     public static function config()

@@ -47,11 +47,11 @@ $link = $this->el('a', [
         <?= $image($element, $props['image']) ?>
         <?php endif; ?>
 
-        <?php if ($props['title']): ?>
+        <?php if ($props['title'] != ''): ?>
         <?= $title($element, $props['title']) ?>
         <?php endif; ?>
 
-        <?php if ($props['content']): ?>
+        <?php if ($props['content'] != ''): ?>
         <?= $content($element, $props['content']) ?>
         <?php endif; ?>
 

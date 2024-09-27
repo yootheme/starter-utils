@@ -1,3 +1,20 @@
+## [1.0.7](https://github.com/yootheme/starter-utils/compare/1.0.6...1.0.7) (2024-09-27)
+
+
+### Bug Fixes
+
+* stability in joomla update server ([466efe7](https://github.com/yootheme/starter-utils/commit/466efe7d561ee9e32b9e4a8ea9c2a6c37053ebf1))
+* update empty check in element examples ([af8d240](https://github.com/yootheme/starter-utils/commit/af8d2400370dd1ca47f6d9f14499fdc97b5042f2))
+
+
+### Features
+
+* add default .gitignore when creating a plugin ([040e4f7](https://github.com/yootheme/starter-utils/commit/040e4f76f7657a5d2f54315694d371bc70815ca4))
+* add element transform example ([cfdb3c3](https://github.com/yootheme/starter-utils/commit/cfdb3c3614197192daa9341b1899960ab0e370a5))
+* update Taskfile in composer post-update-cmd event ([33e4cda](https://github.com/yootheme/starter-utils/commit/33e4cda0bd1259699b1ad7241b0f9ca0b6bd9cbd))
+
+
+
 ## [1.0.6](https://github.com/yootheme/starter-utils/compare/1.0.5...1.0.6) (2024-09-18)
 
 
