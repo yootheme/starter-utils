@@ -78,7 +78,7 @@ class CreatePluginCommand extends Command
         $this->replaceInFile(
             "{$cwd}/.gitignore",
             ['/# pluginfiles/'],
-            ["{$name}.php\n{$name}.xml"],
+            ["./{$name}.php\n./{$name}.xml"],
         );
 
         $output->writeln("Plugin '{$name}' created successfully.");
