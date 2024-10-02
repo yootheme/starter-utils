@@ -123,11 +123,13 @@ class TaskHelper
         $fs = new Filesystem();
 
         foreach ($finder->files() as $file) {
-            $old = hash_file('sha256', 'build/' . $file->getRelativePathname());
-            $new = hash_file('sha256', $file);
+            if ($fs->exists('build/' . $file->getRelativePathname())) {
+                $old = hash_file('sha256', 'build/' . $file->getRelativePathname());
+                $new = hash_file('sha256', $file);
 
-            if ($old === $new) {
-                continue;
+                if ($old === $new) {
+                    continue;
+                }
             }
 
             $fs->dumpFile('build/' . $file->getRelativePathname(), $file->getContents());
