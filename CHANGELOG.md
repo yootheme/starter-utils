@@ -1,3 +1,12 @@
+## [1.0.8](https://github.com/yootheme/starter-utils/compare/1.0.7...1.0.8) (2024-10-02)
+
+
+### Bug Fixes
+
+* Error in post-update-cmd when creating new project (Fixes yootheme/starter-plugin[#3](https://github.com/yootheme/starter-utils/issues/3)) ([ce5f263](https://github.com/yootheme/starter-utils/commit/ce5f263119c4ca9241fa358f892b98e4f84c8800))
+
+
+
 ## [1.0.7](https://github.com/yootheme/starter-utils/compare/1.0.6...1.0.7) (2024-09-27)
 
 
