@@ -117,22 +117,22 @@ class TaskHelper
 
             if ($name === 'yootheme/starter-utils') {
                 $finder = self::glob("{$vendor}/{$name}/src/stubs/plugin/build", 'Taskfile.yml');
-            }
-        }
 
-        $fs = new Filesystem();
+                $fs = new Filesystem();
 
-        foreach ($finder->files() as $file) {
-            if ($fs->exists('build/' . $file->getRelativePathname())) {
-                $old = hash_file('sha256', 'build/' . $file->getRelativePathname());
-                $new = hash_file('sha256', $file);
+                foreach ($finder->files() as $file) {
+                    if ($fs->exists('build/' . $file->getRelativePathname())) {
+                        $old = hash_file('sha256', 'build/' . $file->getRelativePathname());
+                        $new = hash_file('sha256', $file);
 
-                if ($old === $new) {
-                    continue;
+                        if ($old === $new) {
+                            continue;
+                        }
+                    }
+
+                    $fs->dumpFile('build/' . $file->getRelativePathname(), $file->getContents());
                 }
             }
-
-            $fs->dumpFile('build/' . $file->getRelativePathname(), $file->getContents());
         }
     }
 
