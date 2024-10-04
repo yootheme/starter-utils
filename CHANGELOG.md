@@ -1,3 +1,12 @@
+## [1.0.9](https://github.com/yootheme/starter-utils/compare/1.0.8...1.0.9) (2024-10-04)
+
+
+### Bug Fixes
+
+* copy wordpress module to plugin folder ([f260f33](https://github.com/yootheme/starter-utils/commit/f260f330dd112ba2fcd4d727e8ce430044816253)), closes [yootheme/starter-plugin#4](https://github.com/yootheme/starter-plugin/issues/4)
+
+
+
 ## [1.0.8](https://github.com/yootheme/starter-utils/compare/1.0.7...1.0.8) (2024-10-02)
 
 

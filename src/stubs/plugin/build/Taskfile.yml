@@ -71,7 +71,7 @@ tasks:
       - task: utils:copy
         vars:
           src: modules/**
-          dest: dist/wordpress
+          dest: dist/wordpress/{{.NAME}}
           ignore: modules/*joomla*/**
 
   placeholder-joomla:
