@@ -48,7 +48,7 @@ class CreatePluginCommand extends Command
         $variables = [
             'NAME' => $name,
             'PLUGIN' => $name,
-            'PLUGIN_CLASS' => 'plgSystem' . ucfirst(strtr($name, ['-' => '', '_' => ''])),
+            'PLUGIN_CLASS' => 'plgSystem' . ucfirst($name),
             'TITLE' => $ask(new Question('Enter plugin title: ', $name)),
         ];
 

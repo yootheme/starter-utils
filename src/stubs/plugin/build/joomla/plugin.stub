@@ -4,14 +4,23 @@ defined('_JEXEC') || exit();
 
 use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\Event\SubscriberInterface;
 use YOOtheme\Application;
 
-class {{PLUGIN_CLASS}} extends CMSPlugin
+class {{PLUGIN_CLASS}} extends CMSPlugin implements SubscriberInterface
 {
     /**
      * @var CMSApplication
      */
     public $app;
+
+    /**
+     * CMS events the plugin will listen to.
+     */
+    public static function getSubscribedEvents(): array
+    {
+        return ['onAfterInitialise' => 'onAfterInitialise'];
+    }
 
     /**
      * Use 'onAfterInitialise' event.
