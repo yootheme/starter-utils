@@ -1,3 +1,17 @@
+## [1.0.10](https://github.com/yootheme/starter-utils/compare/1.0.9...1.0.10) (2024-10-17)
+
+
+### Bug Fixes
+
+* creating class name containing underscore ([5decc73](https://github.com/yootheme/starter-utils/commit/5decc73a908defb702852dcd2412f8aa28ffc885))
+
+
+### Features
+
+* use SubscriberInterface in Joomla plugin ([3bf7463](https://github.com/yootheme/starter-utils/commit/3bf7463a89ff9dc5eecdca5cbe1c400d21c02c44))
+
+
+
 ## [1.0.9](https://github.com/yootheme/starter-utils/compare/1.0.8...1.0.9) (2024-10-04)
 
 
