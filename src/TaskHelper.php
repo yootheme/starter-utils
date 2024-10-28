@@ -64,11 +64,16 @@ class TaskHelper
     {
         $fs = new Filesystem();
         $files = self::glob($this->cwd, $src, $ignore);
+        $result = json_decode($replace, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new \RuntimeException("Invalid JSON: " . json_last_error_msg());
+        }
 
         foreach ($files->files() as $file) {
             $fs->dumpFile(
                 $file->getPathname(),
-                Str::placeholder($file->getContents(), json_decode($replace, true)),
+                Str::placeholder($file->getContents(), $result),
             );
         }
     }
