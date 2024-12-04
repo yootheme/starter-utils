@@ -6,13 +6,18 @@ $el = $this->el('div', [
 
 // Title
 $title = $this->el('h1', [
-    'class' => ['el-title'],
+    'class' => [
+        'el-title'
+    ],
 ]);
 
 // Content
 $content = $this->el('div', [
-    'class' => ['el-content'],
+    'class' => [
+        'el-content'
+    ],
 ]);
+
 ?>
 
 <?= $el($props, $attrs) ?>
