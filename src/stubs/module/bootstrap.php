@@ -8,6 +8,7 @@ use YOOtheme\Path;
 // includes
 
 return [
+
     'theme' => [
         // add theme config ...
     ],
@@ -27,4 +28,5 @@ return [
             $builder->addTypePath(Path::get('./elements/*/element.json'));
         },
     ],
+
 ];
