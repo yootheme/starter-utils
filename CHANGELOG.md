@@ -1,3 +1,13 @@
+## [1.0.11](https://github.com/yootheme/starter-utils/compare/1.0.10...1.0.11) (2024-12-05)
+
+
+### Bug Fixes
+
+* inserting TranslationListener into bootstrap.php in CreateModuleCommand ([8946edc](https://github.com/yootheme/starter-utils/commit/8946edce4dbf43d6168f4d9c5f177d3c5d954752))
+* throw json error ([0ee8175](https://github.com/yootheme/starter-utils/commit/0ee81752a632198903ee9f6f4c484ce18f80903c))
+
+
+
 ## [1.0.10](https://github.com/yootheme/starter-utils/compare/1.0.9...1.0.10) (2024-10-17)
 
 

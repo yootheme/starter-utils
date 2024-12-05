@@ -149,7 +149,13 @@
             "fields": [
                 {
                     "title": "Content",
-                    "fields": ["content", "show_title", "show_content", "show_image", "show_link"]
+                    "fields": [
+                        "content",
+                        "show_title",
+                        "show_content",
+                        "show_image",
+                        "show_link"
+                    ]
                 },
                 {
                     "title": "Settings",

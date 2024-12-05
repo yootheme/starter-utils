@@ -13,7 +13,7 @@
     },
     "placeholder": {
         "props": {
-            "title": "",
+            "title": "Title",
             "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
         }
     },
@@ -54,7 +54,7 @@
         "attributes": "${builder.attrs}",
         "css": {
             "label": "CSS",
-            "description": "Enter your own custom CSS. The following selectors will be prefixed automatically for this element: <code>.el-element</code>, <code>.el-item</code>, <code>.el-title</code>, <code>.el-content</code>, <code>.el-image</code>, <code>.el-link</code>",
+            "description": "Enter your own custom CSS. The following selectors will be prefixed automatically for this element: <code>.el-element</code>, <code>.el-title</code>, <code>.el-content</code>",
             "type": "editor",
             "editor": "code",
             "mode": "css",
@@ -69,7 +69,10 @@
             "fields": [
                 {
                     "title": "Content",
-                    "fields": ["title", "content"]
+                    "fields": [
+                        "title",
+                        "content"
+                    ]
                 },
                 {
                     "title": "Settings",

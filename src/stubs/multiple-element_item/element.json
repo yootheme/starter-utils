@@ -68,7 +68,13 @@
             "fields": [
                 {
                     "title": "Content",
-                    "fields": ["title", "content", "image", "image_alt", "link"]
+                    "fields": [
+                        "title",
+                        "content",
+                        "image",
+                        "image_alt",
+                        "link"
+                    ]
                 },
                 {
                     "title": "Settings",
