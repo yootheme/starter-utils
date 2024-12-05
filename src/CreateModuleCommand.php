@@ -220,13 +220,19 @@ class CreateModuleCommand extends Command
 
         if ($translator) {
             // add TranslationListener
-            $find = ['#// includes#', '#// add event handlers ...#'];
-            $replace = [
-                "\${0}\ninclude_once __DIR__ . '/src/TranslationListener.php';",
-                "\${0}\n\n        'customizer.init' => [
+            $find = ['#// includes#'];
+            $replace = ["\${0}\ninclude_once __DIR__ . '/src/TranslationListener.php';"];
+
+            if ($settings) {
+                $find[] = "#'customizer.init' => \[#";
+                $replace[] = "\${0}
+            TranslationListener::class => ['initCustomizer', -10],";
+            } else {
+                $find[] = '#// add event handlers ...#';
+                $replace[] = "\${0}\n\n        'customizer.init' => [
             TranslationListener::class => ['initCustomizer', -10],
-        ],",
-            ];
+        ],";
+            }
 
             $this->replaceInFile("{$path}/bootstrap.php", $find, $replace);
 
