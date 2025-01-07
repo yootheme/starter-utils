@@ -19,6 +19,9 @@ class CreateJoomlaUpdateCommand extends Command
 
         if (empty($files)) {
             $output->writeln('<error>Could not find Joomla package in dist folder.</error>');
+            $output->writeln(
+                'Create a Joomla package with the task: <info>task build-joomla</info>',
+            );
 
             return Command::FAILURE;
         }

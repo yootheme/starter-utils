@@ -14,11 +14,13 @@ class CreateWordpressUpdateCommand extends Command
 {
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $zip = new \ZipArchive();
         $files = glob(Path::join(getcwd(), 'dist', '*-wp-*.zip'));
 
         if (empty($files)) {
             $output->writeln('<error>Could not find Wordpress package in dist folder.</error>');
+            $output->writeln(
+                'Create a Wordpress package with the task: <info>task build-wordpress</info>',
+            );
 
             return Command::FAILURE;
         }

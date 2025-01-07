@@ -22,8 +22,16 @@ class CreateElementCommand extends Command
 
     protected function configure()
     {
-        $this->addArgument('name', InputArgument::REQUIRED);
-        $this->addArgument('module', InputArgument::OPTIONAL);
+        $this->addArgument(
+            'name',
+            InputArgument::REQUIRED,
+            'The element name, for example "my-element"',
+        );
+        $this->addArgument(
+            'module',
+            InputArgument::OPTIONAL,
+            'The module name where to create the element in',
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

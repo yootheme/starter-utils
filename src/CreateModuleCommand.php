@@ -20,7 +20,11 @@ class CreateModuleCommand extends Command
 
     protected function configure()
     {
-        $this->addArgument('name', InputArgument::REQUIRED);
+        $this->addArgument(
+            'name',
+            InputArgument::REQUIRED,
+            'Add wordpress or joomla to the name for system-specific modules, for example my-module-wordpress or my-module-joomla',
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
