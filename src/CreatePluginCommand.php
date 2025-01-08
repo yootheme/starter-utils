@@ -82,6 +82,9 @@ class CreatePluginCommand extends Command
         );
 
         $output->writeln("Plugin '{$name}' created successfully.");
+        $output->writeln(
+            'You can now add YOOtheme Pro modules to the plugin with command `composer create:module`.',
+        );
 
         return Command::SUCCESS;
     }

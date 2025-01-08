@@ -249,6 +249,9 @@ class CreateModuleCommand extends Command
         }
 
         $output->writeln('Module created successfully.');
+        $output->writeln(
+            'You can now add custom elements to the module using the command `composer create:element`.',
+        );
 
         return Command::SUCCESS;
     }
