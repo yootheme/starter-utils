@@ -23,6 +23,9 @@ add_action('after_setup_theme', function () {
         return;
     }
 
+    // include autoload
+    require __DIR__ . '/vendor/autoload.php';
+
     // Load module from the same directory
     $app = Application::getInstance();
     $app->load(__DIR__ . '/modules/*/bootstrap.php');

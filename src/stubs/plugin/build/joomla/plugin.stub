@@ -32,6 +32,9 @@ class {{PLUGIN_CLASS}} extends CMSPlugin implements SubscriberInterface
             return;
         }
 
+        // include autoload
+        require __DIR__ . '/vendor/autoload.php';
+
         // Load module from the same directory
         $app = Application::getInstance();
         $app->load(__DIR__ . '/modules/*/bootstrap.php');
