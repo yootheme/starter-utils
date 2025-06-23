@@ -1,3 +1,12 @@
+## [1.0.13](https://github.com/yootheme/starter-utils/compare/1.0.12...1.0.13) (2025-06-23)
+
+
+### Features
+
+* add autoloading to plugin files ([e8ec987](https://github.com/yootheme/starter-utils/commit/e8ec987e78598f7703d2002bda0a91db2c71cac3))
+
+
+
 ## [1.0.11](https://github.com/yootheme/starter-utils/compare/1.0.10...1.0.11) (2024-12-05)
 
 
