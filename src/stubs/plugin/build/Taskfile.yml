@@ -22,6 +22,13 @@ tasks:
 
       - task: placeholder-joomla
 
+      - task: utils:copy
+        vars:
+          cwd: vendor/
+          src: '**'
+          ignore: yootheme/**
+          dest: dist/joomla/vendor
+
       - task: utils:zip
         vars:
           cwd: dist/joomla
@@ -44,6 +51,13 @@ tasks:
       - task: copy-module-wordpress
 
       - task: placeholder-wordpress
+
+      - task: utils:copy
+        vars:
+          cwd: vendor/
+          src: '**'
+          ignore: yootheme/**
+          dest: dist/wordpress/{{.NAME}}/vendor
 
       - task: utils:zip
         vars:
