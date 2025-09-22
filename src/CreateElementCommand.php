@@ -96,21 +96,9 @@ class CreateElementCommand extends Command
             }
 
             foreach ($finder->files() as $file) {
-                $content = null;
-
-                if ($transform && $file->getBasename() === 'element.json') {
-                    $content = json_encode(
-                        [
-                            ...['@import' => './element.php'],
-                            ...json_decode($file->getContents(), true),
-                        ],
-                        JSON_PRETTY_PRINT,
-                    );
-                }
-
                 $fs->dumpFile(
                     "{$path}/{$file->getRelativePathname()}",
-                    Str::placeholder($content ?? $file->getContents(), $variables),
+                    Str::placeholder($file->getContents(), $variables),
                 );
             }
         }
