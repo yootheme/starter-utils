@@ -16,14 +16,8 @@ return [
         'render' => __DIR__ . '/templates/template.php',
         'content' => __DIR__ . '/templates/content.php',
     ],
-    'transforms' => [
-        'render' => function ($node) {
-            // Don't render element if content fields are empty
-            return $node->props['title'] != '' ||
-                $node->props['content'] != '' ||
-                $node->props['image'];
-        },
-    ],
+    '{{TRANSFORMS}}',
+    '{{UPDATES}}',
     'fields' => [
         'title' => [
             'label' => 'Title',

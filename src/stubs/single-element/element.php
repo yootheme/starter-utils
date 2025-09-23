@@ -9,10 +9,6 @@ return [
     'element' => true,
     'width' => 500,
     'defaults' => [],
-    'templates' => [
-        'render' => __DIR__ . '/templates/template.php',
-        'content' => __DIR__ . '/templates/content.php',
-    ],
     'placeholder' => [
         'props' => [
             'title' => 'Title',
@@ -20,6 +16,12 @@ return [
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
         ],
     ],
+    'templates' => [
+        'render' => __DIR__ . '/templates/template.php',
+        'content' => __DIR__ . '/templates/content.php',
+    ],
+    '{{TRANSFORMS}}',
+    '{{UPDATES}}',
     'fields' => [
         'title' => [
             'label' => 'Title',

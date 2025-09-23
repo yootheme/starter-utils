@@ -18,10 +18,6 @@ return [
         'title_element' => 'h3',
         'link_text' => 'Read more',
     ],
-    'templates' => [
-        'render' => __DIR__ . '/templates/template.php',
-        'content' => __DIR__ . '/templates/content.php',
-    ],
     'placeholder' => [
         'children' => [
             ['type' => 'example_item', 'props' => []],
@@ -29,6 +25,12 @@ return [
             ['type' => 'example_item', 'props' => []],
         ],
     ],
+    'templates' => [
+        'render' => __DIR__ . '/templates/template.php',
+        'content' => __DIR__ . '/templates/content.php',
+    ],
+    '{{TRANSFORMS}}',
+    '{{UPDATES}}',
     'fields' => [
         'content' => [
             'label' => 'Items',

@@ -10,4 +10,15 @@ class StringHelper
 
         return preg_replace_callback('/{{\s*(\w+?)\s*}}/', $callback, $str);
     }
+
+    public static function replace(string $str, array $replace): string
+    {
+        $result = str_replace(array_keys($replace), array_values($replace), $str);
+
+        // Remove empty lines and lines with only a comma
+        $lines = explode("\n", $result);
+        $lines = array_filter($lines, fn($line) => trim($line) !== ',');
+
+        return implode("\n", $lines);
+    }
 }

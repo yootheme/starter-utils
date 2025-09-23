@@ -74,19 +74,47 @@ class CreateElementCommand extends Command
             ];
         }
 
-        if (
-            $transform = $ask(
-                new ConfirmationQuestion('Include Element transform example? [y/N] ', false),
-            )
-        ) {
-            $finders[$name]->in("{$this->stubs}/element-transform");
-        }
-
         $variables = [
             'NAME' => $name,
             'TITLE' => $ask(new Question('Enter element title: ', $name)),
             'GROUP' => $ask(new Question('Enter element group: ', 'Custom')),
         ];
+
+        $replace = [];
+
+        // read the array of the stub file in element-transform
+        // if confirmed include the array into the existing array in the element.php
+        if (
+            $ask(
+                new ConfirmationQuestion(
+                    'Include Element transform and updates example? [y/N] ',
+                    false,
+                ),
+            )
+        ) {
+            // Read the transform stub file
+            $transformStub = "{$this->stubs}/element-transform/element.php";
+            if (file_exists($transformStub)) {
+                $transform = file_get_contents($transformStub);
+
+                // Extract the transforms array from the stub
+                if (preg_match("/'transforms'\s*=>\s*(\[.*?\]),/s", $transform, $matches)) {
+                    $replace["'{{TRANSFORMS}}'"] = "'transforms' => $matches[1]";
+                } else {
+                    $replace["'{{TRANSFORMS}}'"] = '';
+                }
+
+                // Extract the updates array from the stub
+                if (preg_match("/'updates'\s*=>\s*(\[.*?\]),/s", $transform, $matches)) {
+                    $replace["'{{UPDATES}}'"] = "'updates' => $matches[1]";
+                } else {
+                    $replace["'{{UPDATES}}'"] = '';
+                }
+            }
+        } else {
+            $replace["'{{TRANSFORMS}}'"] = '';
+            $replace["'{{UPDATES}}'"] = '';
+        }
 
         foreach ($finders as $name => $finder) {
             $path = Path::join($cwd, $module, 'elements', $name);
@@ -96,10 +124,10 @@ class CreateElementCommand extends Command
             }
 
             foreach ($finder->files() as $file) {
-                $fs->dumpFile(
-                    "{$path}/{$file->getRelativePathname()}",
-                    Str::placeholder($file->getContents(), $variables),
-                );
+                $content = Str::placeholder($file->getContents(), $variables);
+                $content = Str::replace($content, $replace);
+
+                $fs->dumpFile("{$path}/{$file->getRelativePathname()}", $content);
             }
         }
 
