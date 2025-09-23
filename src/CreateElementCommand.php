@@ -80,7 +80,8 @@ class CreateElementCommand extends Command
             'GROUP' => $ask(new Question('Enter element group: ', 'Custom')),
         ];
 
-        $replace = [];
+        $replace = ['transforms', 'updates'];
+        $replacements = [];
 
         // read the array of the stub file in element-transform
         // if confirmed include the array into the existing array in the element.php
@@ -97,23 +98,20 @@ class CreateElementCommand extends Command
             if (file_exists($transformStub)) {
                 $transform = file_get_contents($transformStub);
 
-                // Extract the transforms array from the stub
-                if (preg_match("/'transforms'\s*=>\s*(\[.*?\]),/s", $transform, $matches)) {
-                    $replace["'{{TRANSFORMS}}'"] = "'transforms' => $matches[1]";
-                } else {
-                    $replace["'{{TRANSFORMS}}'"] = '';
-                }
-
-                // Extract the updates array from the stub
-                if (preg_match("/'updates'\s*=>\s*(\[.*?\]),/s", $transform, $matches)) {
-                    $replace["'{{UPDATES}}'"] = "'updates' => $matches[1]";
-                } else {
-                    $replace["'{{UPDATES}}'"] = '';
+                foreach ($replace as $key) {
+                    $keyUpper = strtoupper($key);
+                    if (preg_match("/'$key'\s*=>\s*(\[.*?\]),/s", $transform, $matches)) {
+                        $replacements["'{{ $keyUpper }}'"] = "'$key' => $matches[1]";
+                    } else {
+                        $replacements["'{{ $keyUpper }}',"] = '';
+                    }
                 }
             }
         } else {
-            $replace["'{{TRANSFORMS}}'"] = '';
-            $replace["'{{UPDATES}}'"] = '';
+            foreach ($replace as $key) {
+                $keyUpper = strtoupper($key);
+                $replace["'{{ $keyUpper }}',"] = '';
+            }
         }
 
         foreach ($finders as $name => $finder) {
@@ -125,7 +123,7 @@ class CreateElementCommand extends Command
 
             foreach ($finder->files() as $file) {
                 $content = Str::placeholder($file->getContents(), $variables);
-                $content = Str::replace($content, $replace);
+                $content = Str::replace($content, $replacements);
 
                 $fs->dumpFile("{$path}/{$file->getRelativePathname()}", $content);
             }

@@ -29,8 +29,8 @@ return [
         'render' => __DIR__ . '/templates/template.php',
         'content' => __DIR__ . '/templates/content.php',
     ],
-    '{{TRANSFORMS}}',
-    '{{UPDATES}}',
+    '{{ TRANSFORMS }}',
+    '{{ UPDATES }}',
     'fields' => [
         'content' => [
             'label' => 'Items',

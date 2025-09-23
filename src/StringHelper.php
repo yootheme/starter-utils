@@ -15,9 +15,9 @@ class StringHelper
     {
         $result = str_replace(array_keys($replace), array_values($replace), $str);
 
-        // Remove empty lines and lines with only a comma
+        // Remove empty lines
         $lines = explode("\n", $result);
-        $lines = array_filter($lines, fn($line) => trim($line) !== ',');
+        $lines = array_filter($lines, fn($line) => trim($line) !== '');
 
         return implode("\n", $lines);
     }
