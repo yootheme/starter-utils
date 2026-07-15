@@ -67,7 +67,7 @@ class CreatePluginCommand extends Command
                 strtr("{$cwd}/{$relativePath}", $filemap),
                 Str::placeholder(
                     $file->getContents(),
-                    in_array($file->getBasename(), ['Taskfile.yml', '.env', 'plugin.stub'])
+                    in_array($file->getBasename(), ['Taskfile.yml', '.env'])
                         ? $questions
                         : $variables,
                 ),
