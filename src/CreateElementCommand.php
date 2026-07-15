@@ -20,7 +20,7 @@ class CreateElementCommand extends Command
 {
     protected string $stubs = __DIR__ . '/stubs';
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->addArgument(
             'name',

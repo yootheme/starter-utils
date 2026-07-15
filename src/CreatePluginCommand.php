@@ -18,7 +18,7 @@ class CreatePluginCommand extends Command
 {
     protected string $stubs = __DIR__ . '/stubs';
 
-    protected function configure()
+    protected function configure(): void
     {
         if (version_compare(Composer::getVersion(), '2.5', '<')) {
             throw new \Exception('Composer version 2.5 or higher is required');
