@@ -1,127 +1,102 @@
-## [1.0.13](https://github.com/yootheme/starter-utils/compare/1.0.12...1.0.13) (2025-06-23)
+## [1.0.14](https://github.com/yootheme/starter-utils/compare/1.0.13...1.0.14) (2026-07-15)
 
+### Bug Fixes
+
+- relative file path on Windows in create-plugin command ([716d030](https://github.com/yootheme/starter-utils/commit/716d030b3822bfd601114e85085c4887cfc40e5a))
 
 ### Features
 
-* add autoloading to plugin files ([e8ec987](https://github.com/yootheme/starter-utils/commit/e8ec987e78598f7703d2002bda0a91db2c71cac3))
+- add id, class and attributes options to multiple items element according to YOOtheme 5 ([59b6312](https://github.com/yootheme/starter-utils/commit/59b63125aedfd45951646148a66ff1a586e8353c))
+- element configs to use PHP instead of JSON files ([e36a2d6](https://github.com/yootheme/starter-utils/commit/e36a2d642d8d83099b7d632ef206c37f992584b5))
+- update elements according to YOOtheme 5 ([aca4249](https://github.com/yootheme/starter-utils/commit/aca4249c3d13c83b6c6f21c8662aa499ec057d4a))
 
+## [1.0.13](https://github.com/yootheme/starter-utils/compare/1.0.12...1.0.13) (2025-06-23)
 
+### Features
+
+- add autoloading to plugin files ([e8ec987](https://github.com/yootheme/starter-utils/commit/e8ec987e78598f7703d2002bda0a91db2c71cac3))
 
 ## [1.0.11](https://github.com/yootheme/starter-utils/compare/1.0.10...1.0.11) (2024-12-05)
 
-
 ### Bug Fixes
 
-* inserting TranslationListener into bootstrap.php in CreateModuleCommand ([8946edc](https://github.com/yootheme/starter-utils/commit/8946edce4dbf43d6168f4d9c5f177d3c5d954752))
-* throw json error ([0ee8175](https://github.com/yootheme/starter-utils/commit/0ee81752a632198903ee9f6f4c484ce18f80903c))
-
-
+- inserting TranslationListener into bootstrap.php in CreateModuleCommand ([8946edc](https://github.com/yootheme/starter-utils/commit/8946edce4dbf43d6168f4d9c5f177d3c5d954752))
+- throw json error ([0ee8175](https://github.com/yootheme/starter-utils/commit/0ee81752a632198903ee9f6f4c484ce18f80903c))
 
 ## [1.0.10](https://github.com/yootheme/starter-utils/compare/1.0.9...1.0.10) (2024-10-17)
 
-
 ### Bug Fixes
 
-* creating class name containing underscore ([5decc73](https://github.com/yootheme/starter-utils/commit/5decc73a908defb702852dcd2412f8aa28ffc885))
-
+- creating class name containing underscore ([5decc73](https://github.com/yootheme/starter-utils/commit/5decc73a908defb702852dcd2412f8aa28ffc885))
 
 ### Features
 
-* use SubscriberInterface in Joomla plugin ([3bf7463](https://github.com/yootheme/starter-utils/commit/3bf7463a89ff9dc5eecdca5cbe1c400d21c02c44))
-
-
+- use SubscriberInterface in Joomla plugin ([3bf7463](https://github.com/yootheme/starter-utils/commit/3bf7463a89ff9dc5eecdca5cbe1c400d21c02c44))
 
 ## [1.0.9](https://github.com/yootheme/starter-utils/compare/1.0.8...1.0.9) (2024-10-04)
 
-
 ### Bug Fixes
 
-* copy wordpress module to plugin folder ([f260f33](https://github.com/yootheme/starter-utils/commit/f260f330dd112ba2fcd4d727e8ce430044816253)), closes [yootheme/starter-plugin#4](https://github.com/yootheme/starter-plugin/issues/4)
-
-
+- copy wordpress module to plugin folder ([f260f33](https://github.com/yootheme/starter-utils/commit/f260f330dd112ba2fcd4d727e8ce430044816253)), closes [yootheme/starter-plugin#4](https://github.com/yootheme/starter-plugin/issues/4)
 
 ## [1.0.8](https://github.com/yootheme/starter-utils/compare/1.0.7...1.0.8) (2024-10-02)
 
-
 ### Bug Fixes
 
-* Error in post-update-cmd when creating new project (Fixes yootheme/starter-plugin[#3](https://github.com/yootheme/starter-utils/issues/3)) ([ce5f263](https://github.com/yootheme/starter-utils/commit/ce5f263119c4ca9241fa358f892b98e4f84c8800))
-
-
+- Error in post-update-cmd when creating new project (Fixes yootheme/starter-plugin[#3](https://github.com/yootheme/starter-utils/issues/3)) ([ce5f263](https://github.com/yootheme/starter-utils/commit/ce5f263119c4ca9241fa358f892b98e4f84c8800))
 
 ## [1.0.7](https://github.com/yootheme/starter-utils/compare/1.0.6...1.0.7) (2024-09-27)
 
-
 ### Bug Fixes
 
-* stability in joomla update server ([466efe7](https://github.com/yootheme/starter-utils/commit/466efe7d561ee9e32b9e4a8ea9c2a6c37053ebf1))
-* update empty check in element examples ([af8d240](https://github.com/yootheme/starter-utils/commit/af8d2400370dd1ca47f6d9f14499fdc97b5042f2))
-
+- stability in joomla update server ([466efe7](https://github.com/yootheme/starter-utils/commit/466efe7d561ee9e32b9e4a8ea9c2a6c37053ebf1))
+- update empty check in element examples ([af8d240](https://github.com/yootheme/starter-utils/commit/af8d2400370dd1ca47f6d9f14499fdc97b5042f2))
 
 ### Features
 
-* add default .gitignore when creating a plugin ([040e4f7](https://github.com/yootheme/starter-utils/commit/040e4f76f7657a5d2f54315694d371bc70815ca4))
-* add element transform example ([cfdb3c3](https://github.com/yootheme/starter-utils/commit/cfdb3c3614197192daa9341b1899960ab0e370a5))
-* update Taskfile in composer post-update-cmd event ([33e4cda](https://github.com/yootheme/starter-utils/commit/33e4cda0bd1259699b1ad7241b0f9ca0b6bd9cbd))
-
-
+- add default .gitignore when creating a plugin ([040e4f7](https://github.com/yootheme/starter-utils/commit/040e4f76f7657a5d2f54315694d371bc70815ca4))
+- add element transform example ([cfdb3c3](https://github.com/yootheme/starter-utils/commit/cfdb3c3614197192daa9341b1899960ab0e370a5))
+- update Taskfile in composer post-update-cmd event ([33e4cda](https://github.com/yootheme/starter-utils/commit/33e4cda0bd1259699b1ad7241b0f9ca0b6bd9cbd))
 
 ## [1.0.6](https://github.com/yootheme/starter-utils/compare/1.0.5...1.0.6) (2024-09-18)
 
-
 ### Bug Fixes
 
-* required keys for the joomla update server ([4159ffb](https://github.com/yootheme/starter-utils/commit/4159ffb3ccf26a203480c9b2fe505d3323c43e30))
-* wrong path in setup-wordpress task ([a557a42](https://github.com/yootheme/starter-utils/commit/a557a42642dd7d0b3607f7d866c2ac7a8db8c941))
-
-
+- required keys for the joomla update server ([4159ffb](https://github.com/yootheme/starter-utils/commit/4159ffb3ccf26a203480c9b2fe505d3323c43e30))
+- wrong path in setup-wordpress task ([a557a42](https://github.com/yootheme/starter-utils/commit/a557a42642dd7d0b3607f7d866c2ac7a8db8c941))
 
 ## [1.0.5](https://github.com/yootheme/starter-utils/compare/1.0.4...1.0.5) (2024-09-13)
 
-
 ### Bug Fixes
 
-* copy translation file example ([68f2d2b](https://github.com/yootheme/starter-utils/commit/68f2d2ba675b4f8802f7b24225e4c90992d17149))
-
+- copy translation file example ([68f2d2b](https://github.com/yootheme/starter-utils/commit/68f2d2ba675b4f8802f7b24225e4c90992d17149))
 
 ### Features
 
-* ask for group in create element command ([a67437d](https://github.com/yootheme/starter-utils/commit/a67437dbea2fb384a43f09f8d667ff6e97ae4c9f))
-
-
+- ask for group in create element command ([a67437d](https://github.com/yootheme/starter-utils/commit/a67437dbea2fb384a43f09f8d667ff6e97ae4c9f))
 
 ## [1.0.4](https://github.com/yootheme/starter-utils/compare/1.0.3...1.0.4) (2024-09-03)
 
-
 ### Bug Fixes
 
-* lowercase node names and duplicates in update.xml ([508f4e6](https://github.com/yootheme/starter-utils/commit/508f4e6705805da068c7031429e8cc33b0a341f8))
-
+- lowercase node names and duplicates in update.xml ([508f4e6](https://github.com/yootheme/starter-utils/commit/508f4e6705805da068c7031429e8cc33b0a341f8))
 
 ### Features
 
-* add wordpress update command ([8d23351](https://github.com/yootheme/starter-utils/commit/8d2335124a54df97d0ec90e94d72f8f737d5de5f))
-* build task creates plugin update files ([b1014a5](https://github.com/yootheme/starter-utils/commit/b1014a5681cf0f624f5dda0fc4e5e5a179749228))
-
-
+- add wordpress update command ([8d23351](https://github.com/yootheme/starter-utils/commit/8d2335124a54df97d0ec90e94d72f8f737d5de5f))
+- build task creates plugin update files ([b1014a5](https://github.com/yootheme/starter-utils/commit/b1014a5681cf0f624f5dda0fc4e5e5a179749228))
 
 ## [1.0.3](https://github.com/yootheme/starter-utils/compare/1.0.2...1.0.3) (2024-08-30)
 
-
 ### Bug Fixes
 
-* generating file hashes ([3b17e76](https://github.com/yootheme/starter-utils/commit/3b17e764910fdbf5a02c12ba39115f86f5b8e084))
-
-
+- generating file hashes ([3b17e76](https://github.com/yootheme/starter-utils/commit/3b17e764910fdbf5a02c12ba39115f86f5b8e084))
 
 ## [1.0.2](https://github.com/yootheme/starter-utils/compare/1.0.1...1.0.2) (2024-08-30)
 
-
 ### Features
 
-* add create update xml command ([fc013f7](https://github.com/yootheme/starter-utils/commit/fc013f77241f144755ef46d40c0bf61ab1fea2df))
-
-
+- add create update xml command ([fc013f7](https://github.com/yootheme/starter-utils/commit/fc013f77241f144755ef46d40c0bf61ab1fea2df))
 
 # [1.0.0](https://github.com/yootheme/starter-utils/compare/497aa24b246fb9f0f867768094e8945dd55590e8...1.0.0) (2024-08-20)
 
