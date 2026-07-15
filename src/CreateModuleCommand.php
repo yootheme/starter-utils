@@ -18,7 +18,7 @@ class CreateModuleCommand extends Command
 {
     protected string $stubs = __DIR__ . '/stubs';
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->addArgument(
             'name',
@@ -67,9 +67,7 @@ class CreateModuleCommand extends Command
         );
 
         $finders = [
-            'module' => (new Finder())
-                ->name('bootstrap.php')
-                ->in("{$this->stubs}/module"),
+            'module' => (new Finder())->name('bootstrap.php')->in("{$this->stubs}/module"),
         ];
 
         if ($assets) {
