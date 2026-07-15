@@ -36,9 +36,7 @@ class CreatePluginCommand extends Command
 
         $fn = [$this->getHelper('question'), 'ask'];
         $ask = $this->partial($fn, $input, $output);
-        $finder = (new Finder())
-            ->in("{$this->stubs}/plugin")
-            ->ignoreDotFiles(false);
+        $finder = (new Finder())->in("{$this->stubs}/plugin")->ignoreDotFiles(false);
 
         $filemap = [
             '/plugin.xml' => "/{$name}.xml",
@@ -63,11 +61,13 @@ class CreatePluginCommand extends Command
         $variables['UPDATEHOST'] = parse_url($questions['UPDATEURI'], PHP_URL_HOST);
 
         foreach ($finder->files() as $file) {
+            $relativePath = str_replace('\\', '/', $file->getRelativePathname());
+
             $fs->dumpFile(
-                strtr("{$cwd}/{$file->getRelativePathname()}", $filemap),
+                strtr("{$cwd}/{$relativePath}", $filemap),
                 Str::placeholder(
                     $file->getContents(),
-                    in_array($file->getBasename(), ['Taskfile.yml', '.env'])
+                    in_array($file->getBasename(), ['Taskfile.yml', '.env', 'plugin.stub'])
                         ? $questions
                         : $variables,
                 ),

@@ -8,7 +8,6 @@ use YOOtheme\Path;
 // includes
 
 return [
-
     'theme' => [
         // add theme config ...
     ],
@@ -25,8 +24,7 @@ return [
         // extend container services ...
 
         Builder::class => function (Builder $builder) {
-            $builder->addTypePath(Path::get('./elements/*/element.json'));
+            $builder->addTypePath(Path::get('./elements/*/element.php'));
         },
     ],
-
 ];

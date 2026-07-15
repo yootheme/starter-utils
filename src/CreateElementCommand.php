@@ -74,19 +74,45 @@ class CreateElementCommand extends Command
             ];
         }
 
-        if (
-            $transform = $ask(
-                new ConfirmationQuestion('Include Element transform example? [y/N] ', false),
-            )
-        ) {
-            $finders[$name]->in("{$this->stubs}/element-transform");
-        }
-
         $variables = [
             'NAME' => $name,
             'TITLE' => $ask(new Question('Enter element title: ', $name)),
             'GROUP' => $ask(new Question('Enter element group: ', 'Custom')),
         ];
+
+        $replace = ['transforms', 'updates'];
+        $replacements = [];
+
+        // read the array of the stub file in element-transform
+        // if confirmed include the array into the existing array in the element.php
+        if (
+            $ask(
+                new ConfirmationQuestion(
+                    'Include Element transform and updates example? [y/N] ',
+                    false,
+                ),
+            )
+        ) {
+            // Read the transform stub file
+            $transformStub = "{$this->stubs}/element-transform/element.php";
+            if (file_exists($transformStub)) {
+                $transform = file_get_contents($transformStub);
+
+                foreach ($replace as $key) {
+                    $keyUpper = strtoupper($key);
+                    if (preg_match("/'$key'\s*=>\s*(\[.*?\]),/s", $transform, $matches)) {
+                        $replacements["'{{ $keyUpper }}'"] = "'$key' => $matches[1]";
+                    } else {
+                        $replacements["'{{ $keyUpper }}',"] = '';
+                    }
+                }
+            }
+        } else {
+            foreach ($replace as $key) {
+                $keyUpper = strtoupper($key);
+                $replace["'{{ $keyUpper }}',"] = '';
+            }
+        }
 
         foreach ($finders as $name => $finder) {
             $path = Path::join($cwd, $module, 'elements', $name);
@@ -96,22 +122,10 @@ class CreateElementCommand extends Command
             }
 
             foreach ($finder->files() as $file) {
-                $content = null;
+                $content = Str::placeholder($file->getContents(), $variables);
+                $content = Str::replace($content, $replacements);
 
-                if ($transform && $file->getBasename() === 'element.json') {
-                    $content = json_encode(
-                        [
-                            ...['@import' => './element.php'],
-                            ...json_decode($file->getContents(), true),
-                        ],
-                        JSON_PRETTY_PRINT,
-                    );
-                }
-
-                $fs->dumpFile(
-                    "{$path}/{$file->getRelativePathname()}",
-                    Str::placeholder($content ?? $file->getContents(), $variables),
-                );
+                $fs->dumpFile("{$path}/{$file->getRelativePathname()}", $content);
             }
         }
 
