@@ -1,3 +1,5 @@
+## [1.0.15](https://github.com/yootheme/starter-utils/compare/1.0.14...1.0.15) (2026-07-16)
+
 ## [1.0.14](https://github.com/yootheme/starter-utils/compare/1.0.13...1.0.14) (2026-07-15)
 
 ### Bug Fixes
